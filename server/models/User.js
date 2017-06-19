@@ -1,21 +1,17 @@
 /**
  * Mongoose Models and Schema Declaration File
+ *
+ * User
  */
+'use strict';
 import mongoose from 'mongoose';
 
-import {Task, TaskSchema} from './Task';
-
 let userSchema = mongoose.Schema({
-    name: String,
-    email: String,
-    todoList: [TaskSchema]
+    email: {type: String, required: true},
+    password: {type: String, required: true},
+    endPoint: [{type: String}], /*A simple String with EndPoint IDs*/
+    createdDate: {type: Date, default: Date.now}
 });
 
-// let userSchema = mongoose.Schema({
-//     name: String,
-//     email: String,
-//     friendList: [{type: String}] // would store all of your  user Id. Not an ObjectId reference, a SIMPLE string, that is your friends'id
-// });
-
-
-export default mongoose.model('User', userSchema);
+export let UserSchema = userSchema;
+export let User = mongoose.model('User', userSchema);

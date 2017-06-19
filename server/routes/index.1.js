@@ -13,14 +13,14 @@ export default (app) => {
     app.get('/', (req, res) => {
         res.render('index');
     });
-
+    
  /*
 * C R U D : All Functions work with one or many depending on the query (u) passed in
 */
 
 /* Create All User profiles */
 app.post('/api/user/', (req, res) => {
-    userService.readUser(req.body, (err, data) => {
+        readUser({}, (err, data) => {
             if(!err){
                 console.log(data);
                 res.status(201)
@@ -36,7 +36,7 @@ app.post('/api/user/', (req, res) => {
 
 /* Get All User profiles */
 app.get('/api/user/', (req, res) => {
-        userService.readUser({}, (err, data) => {
+        readUser({}, (err, data) => {
             if(!err){
                 console.log(data);
                 res.status(200)
@@ -51,7 +51,7 @@ app.get('/api/user/', (req, res) => {
 
 /* Get User profiles by id (email) */
 app.get('/api/user/:id', (req, res) => {
-        userService.readUser({email: req.params.id}, (err, data) => {
+        readUser({email: req.params.id}, (err, data) => {
             if(!err){
                 console.log(data);
                 res.status(200)
@@ -67,7 +67,7 @@ app.get('/api/user/:id', (req, res) => {
 
 /* Update User profiles by id (email) */
 app.put('/api/user/:id', (req, res) => {
-        uuserService.pdateUser({email: req.params.id}, (err, data) => {
+        updateUser({email: req.params.id}, (err, data) => {
             if(!err){
                 console.log(data);
                 res.status(200)
@@ -80,9 +80,9 @@ app.put('/api/user/:id', (req, res) => {
         });
     });
 
-/* Delete User profiles by id (email) */
+/* Remove User profiles by id (email) */
 app.delete('/api/user/:id', (req, res) => {
-        userService.removeUser({email: req.params.id}, (err, data) => {
+        removeUser({email: req.params.id}, (err, data) => {
             if(!err){
                 console.log(data);
                 res.status(200)
@@ -95,38 +95,89 @@ app.delete('/api/user/:id', (req, res) => {
         });
     });
 
-/* Remove endPoint to User profiles */
-app.delete('/api/user/:id/removeEndpoint/:url', (req, res) => {
-
-        userService.removeEndPointFromUser({email: u}, req.params.url, (err, data) => {
+    app.post('/task', (req, res) => {
+        createTask(req.body, (err, data) => {
             if(!err){
                 console.log(data);
-                res.status(200)
                 res.json(data);
             }
             else {
-                res.status(400)
                 res.json(err);
             }
         });
     });
 
 
-/* Add endPoint to User profiles */
-app.post('/api/user/:id/addEndpoint/:url', (req, res) => {
-
-        userService.addEndPointToUser({email: u}, req.params.url, (err, data) => {
+    app.post('/task', (req, res) => {
+        createTask(req.body, (err, data) => {
             if(!err){
                 console.log(data);
-                res.status(200)
                 res.json(data);
             }
             else {
-                res.status(400)
                 res.json(err);
             }
         });
     });
+    
 
+    app.post('/user', (req, res) => {
+        console.log(req.body);
+        createUser(req.body, (err, data) => {
+            if(!err){
+                console.log(data);
+            }
+
+            res.json(data);
+        });
+    });
+
+    app.get('/users', (req, res) => {
+        UserService.getAllUsers((err, users) => {
+            if(users){
+                // console.log('USERS! : ', users); // debugging purposes
+                res.json({users});
+            }
+            else {
+                res.statusCode(400);
+                res.send('Error!');
+            }
+        });
+    });
+
+    app.put('/users/:id/task', (req, res) => {
+        console.log('Is our ID there?', req.params.id);
+        console.log('Is our correct task there?', req.body);
+        UserService.push(req.params.id, req.body, (err, modifiedObject) => {
+            if(!err){
+                res.json(modifiedObject);
+            }
+            else {
+                res.json({error: 'There was an error!', data: null});
+            }
+        });
+    });
+
+    app.put('/users/:id/todoList', (req, res) => {
+        console.log('Is our ID there?', req.params.id);
+        console.log('Is our correct todoList there?', req.body);
+        UserService.updateTodoList(req.params.id, req.body, (err, modifiedObject) => {
+            if(!err){
+                res.json(modifiedObject);
+            }
+            else {
+                res.json({error: 'There was an error!', data: null});
+            }
+        });
+    });
+
+    app.get('/users/:id/test', (req, res) => {
+        console.log('Is our ID there?', req.params.id);
+        UserService.getAllUserFriends(req.params.id, (err, data) => {
+            res.json({error: err, data: data});
+        });
+    });
+
+    
 
 }

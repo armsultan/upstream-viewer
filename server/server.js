@@ -27,7 +27,7 @@ app.use(express.static('public'));
 // middleware package that allows us to read the body in request objects.
 app.use(bodyParser.json());
 
-// connection string. 
+// connection string.
 mongoose.connect(`mongodb://localhost/${process.env.DB}`);
 
 Routes(app);
