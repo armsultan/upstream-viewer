@@ -7,7 +7,6 @@
 import {User} from '../models/User';
 import {EndPoint} from '../models/EndPoint';
 import * as statusApiService from '../services/userService';
-
 import axios from 'axios';
 
 /*
@@ -16,6 +15,23 @@ import axios from 'axios';
 
 /* READ (Get) User profile */
 export let createUser = (u, next) => {
+
+// Check if User Exists
+  axios.get('/api/user/' + u.email)
+      .then(res => {
+
+          if(res._id !== "" ){
+            User.create(u, next);
+          }
+
+      })
+      .catch(error => {
+          console.log(error)
+          this.setState({registrationError: "Unable to register at this time"});
+      })
+
+
+
   User.create(u, next);
 };
 

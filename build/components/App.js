@@ -1,50 +1,94 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { BrowserRouter, Route,Switch, Link } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import {render} from 'react-dom';
+import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
 import * as actionCreators from '../actions/actionCreator';
 // import BasicRouting from './BasicRouting';
-// import Todo from './Todo';
-import Todo from './Todo';
+import Register from './Register';
+import Login from './Login';
 import UserTodoList from './UserTodoList';
+import UpstreamView from './UpstreamView';
+import MyServers from './MyServers';
 
-// Redux requires to give a correct mapping of what State should ultimately look like. State is how React and Redux work. What the method below is doing is assigning state to an object, which will represent what props will look like as it descends through the app.
+import Grid from 'material-ui/Grid';
+
+// Redux requires to give a correct mapping of what State should ultimately look
+// like. State is how React and Redux work. What the method below is doing is
+// assigning state to an object, which will represent what props will look like
+// as it descends through the app.
 let mapStateToProps = (state) => {
-    return {
-        users: state.users
-    }
+    return {user: state.user}
 };
 
-// Binds actions to the dispatch object. The dispatch object is the lifecycle of Redux that gets called whenever there is a state change. When it receives an event, it executes the method that we implemented in our actionCreator module.
+// Binds actions to the dispatch object. The dispatch object is the lifecycle of
+// Redux that gets called whenever there is a state change. When it receives an
+// event, it executes the method that we implemented in our actionCreator
+// module.
 let mapDispatchToProps = (dispatch) => {
     return bindActionCreators(actionCreators, dispatch);
 };
 
 class App extends React.Component {
-    constructor(){
+    constructor() {
         super();
-        this.navigateToSingleUser = this.navigateToSingleUser.bind(this);
+        this.navigateToSingleUser = this
+            .navigateToSingleUser
+            .bind(this);
     }
 
-    navigateToSingleUser(routeProps){
+    navigateToSingleUser(routeProps) {
         console.log(routeProps);
-        let user = this.props.users.filter(user => user._id === routeProps.match.params.id)[0];
-        return <Todo {...user} {...routeProps} addTodo={this.props.addTodo} removeTodo={this.props.removeTodo} /> 
+        let user = this
+            .props
+            .users
+            .filter(user => user._id === routeProps.match.params.id)[0];
+        return <Todo
+            {...user}
+            {...routeProps}
+            addTodo={this.props.addTodo}
+            removeTodo={this.props.removeTodo}/>
     }
 
-    render(){
+    render() {
         return (
+            <div>
             <BrowserRouter>
-                <div>
-                    <Link to="/">Home</Link><br/>
-                    <Link to="/users">Users</Link>
+                <Grid container gutter={24}>
+                    <Grid item xs={12}>
+                        <Link to="/">Home</Link><br/>{/* <Link to="/users">Users</Link>
                     <Route exact path="/users" render={(routeProps) => <UserTodoList {...this.props} {...routeProps} />} />
-                    <Route path="/users/:id/todo" render={this.navigateToSingleUser} />
-                    
-                </div>
+                    <Route path="/users/:id/todo" render={this.navigateToSingleUser} /> */}
+
+                        <Link to="/login">Login</Link>
+                        <Route
+                            exact
+                            path="/login"
+                            render={(routeProps) => <Login {...this.props} {...routeProps}/>}/>
+
+                        <Link to="/register">Register</Link>
+                        <Route
+                            exact
+                            path="/register"
+                            render={(routeProps) => <Register {...this.props} {...routeProps}/>}/>
+
+                        <Link to="/myservers">My Servers</Link>
+                        <Route
+                            exact
+                            path="/myservers"
+                            render={(routeProps) => <MyServers {...this.state} {...this.props} {...routeProps}/>}/>
+
+                        <Link to="/upstreamView">Upstream test</Link>
+                        <Route
+                            exact
+                            path="/upstreamView"
+                            render={(routeProps) => <UpstreamView {...this.state} {...this.props} {...routeProps}/>}/>
+                    </Grid>
+                </Grid>
             </BrowserRouter>
+            </div>
+            
         );
     }
 }

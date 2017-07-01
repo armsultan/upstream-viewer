@@ -15,42 +15,41 @@ export default(app, sse) => {
     });
 
     app.get('/sse', (req, res) => {
+        
+ res.setHeader('Content-Type', 'text/event-stream');
+ 
+        AsyncPolling(function (end) {
+    // Do whatever you want. 
+        
+    // Then notify the polling when your job is done: 
+    end();
+    // This will schedule the next call. 
+}, 3000).run();
 
         res.setHeader('Content-Type', 'text/event-stream');
+        setInterval(() => {
+            statusApiService.fetchStatus('http://demo.nginx.com/status/timestamp', (data) =>
+            {
+                // if(!err){
+                res.write(`data: ${data}\n\n`);
+                res.status(200)
+                res.end();
+                // }
+            //     else {
+            //     res.write(`data: error\n\n`);
+            //     res.status(400)
+            //     res.end();
+            // }
+            });           
+        }, 2000);
 
-         /* MORE RELIABLE AsyncPolling with this.stop to prevent errors*/
-        AsyncPolling(function (end) {
-            statusApiService.fetchUpstream('https://demo.nginx.com/status/upstreams/trac-backend', (data,err) => {
-                // res.write(`data: ${data}\n\n`);
-                // res.status(200)
-                // res.end();
-                console.log(`data: ${data}\n\n`);
-                if (!err) {
-                    res.write(`data: ${data}\n\n`);
-                    res.status(200)
-                    res.end();
-
-                  }
-                else{
-                    console.log("error");
-                    res.write(`data: ${err}\n\n`);
-                    res.status(200)
-                    res.end();
-                }
-            });
-            // Then notify the polling when your job is done:
-            this.stop();
-            end();
-            // This will schedule the next call here
-        }, 3000).run();
     });
 
-
-/*
+    /*
 * C R U D : All Functions work with one or many depending on the query (u) passed in
 */
 
-    /* Create / edit User profiles */
+    /* Create User profiles */
     app.post('/api/user/', (req, res) => {
         userService.readUser(req.body, (err, data) => {
             if (!err) {
@@ -94,9 +93,9 @@ export default(app, sse) => {
         });
     });
 
-    /* Register a new User profiles */
+        /* Register a new User profiles */
     app.post('/api/user/register', (req, res) => {
-        console.log(req.body);
+          console.log(req.body);
         userService.createUser(req.body, (err, data) => {
             console.log(data);
             if (!err) {
@@ -169,23 +168,6 @@ export default(app, sse) => {
                 res.status(200)
                 res.json(data);
             } else {
-                res.status(400)
-                res.json(err);
-            }
-        });
-    });
-
-
-    /* Check to see remote NGINX status API exists*/
-    app.post('/api/endpoint/', (req, res) => {
-        console.log(req.body);
-        statusApiService.checkStatusApi(req.body, (data, err) => { //if err is ordered first i.e (err,data) , err always is returned ...WHY?
-            if (!err) {
-                console.log("GOOD, response is: ",data);
-                res.status(200)
-                res.json(data);
-            } else {
-                console.log("BAD, response is: ",err);
                 res.status(400)
                 res.json(err);
             }
