@@ -1,7 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import axios from 'axios';
-import Grid from 'material-ui/Grid';
 
 export default class Registration extends React.Component {
     constructor() {
@@ -81,7 +80,7 @@ export default class Registration extends React.Component {
     render() {
 
         return (
-            <Grid item xs={6}>
+            <div>
                 <h2>Registration</h2>
                 <div>
                     <label>Email:
@@ -93,8 +92,7 @@ export default class Registration extends React.Component {
                     <button type="submit" onClick={this.handleClick}>Register</button>
                 </div>
                                 <div>{this.state.registrationMessage}</div>
-
-            </Grid>
+</div>
         );
     }
 }

@@ -29,14 +29,11 @@ export default class Login extends React.Component {
                 if (res.data !== 0 && res.data[0].email === this.refs.email.value && res.data[0].password === this.refs.password.value){
 
                 console.log('Login Success');
-                this.setState({loginMessage: "Login successful!"});
+                this.setState({loginMessage: "Welcome back!"});
 
                 //redux setstate
                 this.props.userLogin(res.data[0].email);
-                
 
-                 
-                
                 }
                 else {
                 console.log('Login Failed');

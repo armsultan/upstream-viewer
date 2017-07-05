@@ -1,7 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import axios from 'axios';
-import Grid from 'material-ui/Grid';
 import validUrl from 'valid-url';
 
 
@@ -16,15 +15,26 @@ export default class Registration extends React.Component {
             .bind(this);
     }
 
+
     handleClick(event) {
-        if (validUrl.isUri(this.refs.url.value)){
+
+        if (this.refs.name.value.trim() === ""){
+            console.log('Add a name');
+            this.setState({registrationMessage: "Add a name"})
+        }
+
+        else if (validUrl.isUri(this.refs.url.value)){
             console.log('Looks like an URI');
             this.setState({registrationMessage: "Looks like an URI"})
 
 
             axios.post('http://localhost:3000/api/endpoint/',
                 {
-                    url: this.refs.url.value
+                    email: this.props.user.email,
+                    statusApiUrl: this.refs.url.value,
+                    name: this.refs.url.value,
+                    description: this.refs.description.value
+
                 })
                 .then(res => {
                     console.log(res.data);
@@ -56,20 +66,20 @@ render() {
 
         return (
             <div>
-            <Grid item xs={12}>
                 <h2>My Servers</h2>
                                  <strong>user: {this.props.user.email}</strong>
 
                 <p>Enter the url to Live Activity Monitoring API Address (JSON output).</p>
                 <p>For more information on configuration please visit the <a href="https://www.nginx.com/resources/admin-guide/logging-and-monitoring/" target="_blank">logging and monitoring guide</a></p>
-            </Grid>
-            <Grid item xs={6}>
-                    <label>Status API Address:
-                        <input type="url" ref="url"/></label>
+                 <h4>Add Server</h4>
+                <label>Name: </label><input type="text" ref="name"/>
+                <label>Status API Address:</label><input type="url" ref="url"/>
+                <label>Description (Optional) :</label><input type="text" ref="description"/>
+
                          <div>{this.state.registrationMessage}</div>
                     <button type="submit" onClick={this.handleClick}>Add</button>
-                  
-                </Grid>
+                <h4>Server List</h4>
+
 </div>
         );
     }

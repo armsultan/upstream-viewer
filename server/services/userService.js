@@ -45,6 +45,14 @@ export let updateUser = (u, next) => {
   User.update(u, next);
 };
 
+/* Add status API url to User profile  */
+
+export let putEndpoint = (email, endPointId, next) => {
+                                     console.log("mallo mallo ", email, " ",endPointId);
+
+  User.findOneAndUpdate({email: email}, { $push: {endPoint: endPointId}}, next);
+};
+
 /* DELETE User profile */
 export let removeUser = (u, next) => {
   User.remove(u, next);

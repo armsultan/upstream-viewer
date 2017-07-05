@@ -12,8 +12,6 @@ import UserTodoList from './UserTodoList';
 import UpstreamView from './UpstreamView';
 import MyServers from './MyServers';
 
-import Grid from 'material-ui/Grid';
-
 // Redux requires to give a correct mapping of what State should ultimately look
 // like. State is how React and Redux work. What the method below is doing is
 // assigning state to an object, which will represent what props will look like
@@ -55,8 +53,7 @@ class App extends React.Component {
         return (
             <div>
             <BrowserRouter>
-                <Grid container gutter={24}>
-                    <Grid item xs={12}>
+            <div className="row">
                         <Link to="/">Home</Link><br/>{/* <Link to="/users">Users</Link>
                     <Route exact path="/users" render={(routeProps) => <UserTodoList {...this.props} {...routeProps} />} />
                     <Route path="/users/:id/todo" render={this.navigateToSingleUser} /> */}
@@ -84,8 +81,7 @@ class App extends React.Component {
                             exact
                             path="/upstreamView"
                             render={(routeProps) => <UpstreamView {...this.state} {...this.props} {...routeProps}/>}/>
-                    </Grid>
-                </Grid>
+</div>
             </BrowserRouter>
             </div>
             

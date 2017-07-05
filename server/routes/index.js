@@ -109,6 +109,8 @@ export default(app, sse) => {
         });
     });
 
+    
+
     /* Update User profiles by id (email) */
     app.put('/api/user/:id', (req, res) => {
         userService.updateUser({
@@ -140,41 +142,6 @@ export default(app, sse) => {
             }
         });
     });
-
-    /* Remove endPoint to User profiles */
-    app.delete('/api/user/:id/removeEndpoint/:url', (req, res) => {
-
-        userService.removeEndPointFromUser({
-            email: u
-        }, req.params.url, (err, data) => {
-            if (!err) {
-                console.log(data);
-                res.status(200)
-                res.json(data);
-            } else {
-                res.status(400)
-                res.json(err);
-            }
-        });
-    });
-
-    /* Add endPoint to User profiles */
-    app.post('/api/user/:id/addEndpoint/:url', (req, res) => {
-
-        userService.addEndPointToUser({
-            email: u
-        }, req.params.url, (err, data) => {
-            if (!err) {
-                console.log(data);
-                res.status(200)
-                res.json(data);
-            } else {
-                res.status(400)
-                res.json(err);
-            }
-        });
-    });
-
 
     /* Check to see remote NGINX status API exists*/
     app.post('/api/endpoint/', (req, res) => {

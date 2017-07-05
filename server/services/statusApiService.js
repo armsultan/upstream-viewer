@@ -6,12 +6,40 @@
  */
 'use strict';
 import {EndPoint} from '../models/EndPoint';
+import {User} from '../models/User';
+
 import axios from 'axios';
 import randomColor from 'random-color';
+import * as userService from '../services/userService';
+
+//  Person.findByIdAndUpdate(id, p, next);
+//   EndPoint.create(status, next);
+//    name: {type: String, required: true},                   /*Name of the Endpoint (NGINX Cluster)*/
+//     statusApiUrl: {type: String, required: true},           /*URL to the NGINX STATUS API*/
+//     description: {type: String, required: false},           /*Description of the Endpoint (NGINX Cluster)*/
+//     upStreamConfUrl: [{type: String, required: false}],     /*URL to the NGINX Upstream conf*/
+//     createdDate: {type: Date, default: Date.now}            /*Timestamp*/
+// EndPoint.update(
+//    { email: email },
+//    { $push: { "details.make": "zzz" } }
+
+
+let createEndpoint = (body, callback) => {
+
+EndPoint.create(
+    {
+    name: body.name,
+    statusApiUrl: body.statusApiUrl,
+    description: body.description
+    }
+, callback);
+}
+
 
 /*
  * Check if Status API on remote NGINX server EXISTS
  */
+
 export let checkStatusApi = (body, callback) => {
 
     // Fetch the entire NGINX Status and check for the Address Field to confirm API
@@ -25,15 +53,33 @@ export let checkStatusApi = (body, callback) => {
 
 
     axios
-        .get(body.url)
+        .get(body.statusApiUrl)
         .then(response => {
 
             if(response.data !== undefined){
 
-                        console.log(response);
+            console.log(response);
 
             console.log("API Check Status: Found");
             console.log("Address: " + response.data.address);
+
+                createEndpoint(body, (err, data) => {
+                    if (!err) {
+                        console.log("the ID saved is: ", data.id);
+                        userService.putEndpoint(body.email, data.id, (err, data) => {
+                             if (!err) {
+                                 console.log("User updated: ", data);
+                             }
+                             else{
+                                console.log(err);
+                             }
+                             });
+
+                    } else {
+                        console.log(err);
+                    }
+
+                });
 
             let r = {
                 "found": true,

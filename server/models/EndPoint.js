@@ -15,4 +15,4 @@ let endPointSchema = mongoose.Schema({
 });
 
 export let EndPointSchema = endPointSchema;
-export let EndPoint = mongoose.model('Cluster', endPointSchema);
+export let EndPoint = mongoose.model('EndPoint', endPointSchema);
