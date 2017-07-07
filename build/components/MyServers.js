@@ -13,6 +13,10 @@ export default class Registration extends React.Component {
         this.handleClick = this
             .handleClick
             .bind(this);
+
+            this.handleRemoveClick = this
+            .handleRemoveClick
+            .bind(this);
     }
 
 
@@ -33,6 +37,19 @@ export default class Registration extends React.Component {
                 console.log(error);
             })
 
+    }
+
+    handleRemoveClick(event){
+
+        console.log("sup ", event.target.value);
+
+        //Update redux state
+        this.props.updateEndpointsRemove(event.target.value);
+
+        //Update mongodb
+
+        //Update list
+        //this.updateEndpointList();
     }
 
 
@@ -66,6 +83,11 @@ export default class Registration extends React.Component {
         
                         //Update redux state
                         this.updateEndpointList();
+
+                          //unset values
+                          this.refs.name.value="";
+                          this.refs.url.value="";
+                          this.refs.description.value="";
 
                     }
                     else{
@@ -107,11 +129,12 @@ render() {
                                     <ul>
 
                             {this.props.user.endPoints.slice(0).reverse().map((endPoint, key) => {
+                                let reverseKey = this.props.user.endPoints.length - key - 1;
                                     return (
                                         <li className="endPoint" key={key}>
-                                            {endPoint.name},  {endPoint.statusApiUrl}, {endPoint.description}
-                                            <small>
-                                                remove</small>
+                                           {reverseKey}, {endPoint.name},  {endPoint.statusApiUrl}, {endPoint.description}
+                                             <button type="button" value={reverseKey} onClick={this.handleRemoveClick}>Remove</button>
+
                                         </li>
                                     )
                                 })

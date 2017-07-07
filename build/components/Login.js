@@ -35,6 +35,10 @@ export default class Login extends React.Component {
                 //redux setstate
                 this.props.userLogin(res.data[0]);
 
+                //unset values
+                this.refs.email.value="";
+                this.refs.password.value="";
+
                 }
                 else {
                 console.log('Login Failed');

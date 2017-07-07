@@ -12,10 +12,14 @@ let user = (state = {}, action) => {
             updatedUser.email = action.user.email;
             updatedUser.endPoints = action.user.endPoint;
             return updatedUser;
-         case 'ADD_ENDPOINT':
-            let updatedUserEndpoint = Object.assign({}, state);
-            updatedUserEndpoint.endPoints = action.user.endPoint;
-            return updatedUserEndpoint;
+        case 'ADD_ENDPOINT':
+            let updatedUser1 = Object.assign({}, state);
+            updatedUser1.endPoints = action.user.endPoint;
+            return updatedUser1;
+        case 'REMOVE_ENDPOINT':
+            let updatedUser2 = Object.assign({}, state);
+            updatedUser2.endPoints.splice(action.endpointIndex, 1); //remove element
+            return updatedUser2;
         default:
         return state;
     }

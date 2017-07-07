@@ -19,11 +19,20 @@ export let userLogin = (user) => {
     };
 }
 
-// endPoint list
+// update endPoint list (add)
 export let updateEndpoints = (user) => {
-    console.log('dispatch addEndPoint');
+    console.log('dispatch ADD_ENDPOINT');
     return {
         type: 'ADD_ENDPOINT',
         user
+    };
+}
+
+// endPoint list
+export let updateEndpointsRemove = (endpointIndex) => {
+    console.log('dispatch REMOVE_ENDPOINT');
+    return {
+        type: 'REMOVE_ENDPOINT',
+        endpointIndex
     };
 }
