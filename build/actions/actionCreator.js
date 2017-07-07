@@ -3,10 +3,27 @@
  */
 
 // User Login
-export let userLogin = (email) => {
-    console.log('dispatch user');
+// export let userLogin = (email) => {
+//     console.log('dispatch userLogin');
+//     return {
+//         type: 'USER_LOGIN',
+//         email
+//     };
+// }
+
+export let userLogin = (user) => {
+    console.log('dispatch userLogin');
     return {
         type: 'USER_LOGIN',
-        email
+        user
+    };
+}
+
+// endPoint list
+export let updateEndpoints = (user) => {
+    console.log('dispatch addEndPoint');
+    return {
+        type: 'ADD_ENDPOINT',
+        user
     };
 }

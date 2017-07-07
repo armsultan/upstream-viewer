@@ -5,23 +5,11 @@ import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import rootReducer from './reducers/index';
-// let users = [
-//     {
-//         id: 0,
-//         name: 'Roger',
-//         todoList: [],
-//         selected: false
-//     },
-//     {
-//         id: 1,
-//         name: 'Test',
-//         todoList: ['Test'],
-//         selected: false
-//     },
-// ];
+
+
 let user = {
     email : "",
-    endpoints: []
+    endPoints: []
 
 }
 

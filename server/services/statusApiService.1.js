@@ -39,6 +39,7 @@ export let checkStatusApi = (body, callback) => {
                 "comment": "Fail"
                 };
 
+
     axios
         .get(body.statusApiUrl)
         .then(response => {
@@ -48,27 +49,35 @@ export let checkStatusApi = (body, callback) => {
             console.log("API Check Status: Found");
             console.log("Address: " + response.data.address);
 
-                    userService.putEndpoint(body.email, {
+                let endPointId = "";
 
-                        name: body.name,                   /*Name of the Endpoint (NGINX Cluster)*/
-                        statusApiUrl: body.statusApiUrl,           /*URL to the NGINX STATUS API*/
-                        description: body.description,           /*Description of the Endpoint (NGINX Cluster)*/
-                        upStreamConfUrl: "",     /*URL to the NGINX Upstream conf*/
 
-                    }, (err, data) => {
+                createEndpoint(body, (err, data) => {
+                    if (!err) {
+                        endPointId = data.id;
+                        console.log("the ID saved is.....: ", endPointId);
+                        
+                        userService.putEndpoint(body.email, data.id, (err, data) => {
                              if (!err) {
-                                 console.log("User's endpoints: ", data.endPoint);
+                                 console.log("User updated: ", data);
                              }
                              else{
                                 console.log(err);
                              }
                              });
 
+                    } else {
+                        console.log(err);
+                    }
+
+                });
+
             let r = {
                 "found": true,
                 "comment": "Success",
                 "address": response.data.address,
                 "nginx_build": response.data.nginx_build,
+                "endPointId" : endPointId,
                 "timestamp": response.data.timestamp
             };
 

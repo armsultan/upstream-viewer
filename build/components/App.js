@@ -64,6 +64,7 @@ class App extends React.Component {
                             path="/login"
                             render={(routeProps) => <Login {...this.props} {...routeProps}/>}/>
 
+
                         <Link to="/register">Register</Link>
                         <Route
                             exact

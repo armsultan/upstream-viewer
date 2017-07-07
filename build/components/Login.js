@@ -30,9 +30,10 @@ export default class Login extends React.Component {
 
                 console.log('Login Success');
                 this.setState({loginMessage: "Welcome back!"});
+                console.log(res.data[0]);
 
                 //redux setstate
-                this.props.userLogin(res.data[0].email);
+                this.props.userLogin(res.data[0]);
 
                 }
                 else {
