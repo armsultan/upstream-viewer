@@ -22,5 +22,7 @@ let userSchema = mongoose.Schema({
     createdDate: {type: Date, default: Date.now}
 });
 
+
 export let UserSchema = userSchema;
 export let User = mongoose.model('User', userSchema);
+

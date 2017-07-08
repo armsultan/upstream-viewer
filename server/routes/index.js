@@ -14,7 +14,7 @@ export default(app, sse) => {
         res.render('index');
     });
 
-    app.get('/sse', (req, res) => {
+    app.get('/api/endpoint/', (req, res) => {
 
         res.setHeader('Content-Type', 'text/event-stream');
 
@@ -145,7 +145,7 @@ export default(app, sse) => {
 
     /* Add upstream - Check to see remote NGINX status API exists first then add*/
     app.put('/api/user/:id/endpoint/delete', (req, res) => {
-        userService.deleteEndpoint(req.params.id,req.body._id, (err, data) => { //this doesnt work when data is set first i.e.(data,err) 
+        userService.deleteEndpoint(req.params.id,req.body._id, (err, data) => { //this doesnt work when data is set first i.e.(data,err)
             if (!err) {
                 console.log("GOOD, response is: ",data);
                 res.status(200)

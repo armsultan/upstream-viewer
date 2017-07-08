@@ -40,6 +40,7 @@ export let readUser = (u, next) => {
   User.find(u, next);
 };
 
+
 /* Update User profile  */
 export let updateUser = (u, next) => {
   User.update(u, next);

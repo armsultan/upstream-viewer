@@ -1,6 +1,8 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import axios from 'axios';
+import validator from "email-validator";
+
 
 export default class Registration extends React.Component {
     constructor() {
@@ -19,9 +21,13 @@ export default class Registration extends React.Component {
         return passwordBox === confirmbox;
     }
 
+     validEmail() {
+        return validator.validate(this.refs.email.value);
+     }
+
     handleClick(event) {
 
-        if (this.validPasswords()) {
+        if (this.validPasswords() && this.validEmail()) {
             event.preventDefault(); // We want to prevent the default action since in react we want to prevent a page reload from a form submit https://developer.mozilla.org/samples/domref/dispatchEvent.html
 
             let email = this.refs.email.value;
@@ -72,8 +78,15 @@ export default class Registration extends React.Component {
         }
 
         else {
-            this.setState({registrationMessage: "Password does not match!"});
-            console.log("Password does not match!");
+            if(this.validEmail() === false){
+                this.setState({registrationMessage: "Invalid email address!"});
+                console.log("Invalid email address!");
+            }
+            else{
+                this.setState({registrationMessage: "Password does not match!"});
+                console.log("Password does not match!");
+            }
+
         }
 
     }

@@ -10,37 +10,18 @@ export default class UpstreamView extends React.Component {
     constructor() {
         super();
         this.state = {
-            status: {},
-            data: {
-      labels: ["Web Server 1", "Web Server 2", "Web Server 3", "Web Server 4", "Web Server 5"],
-      datasets: [{
-        label: "Connections per sec",
-        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-        data: [2478,5267,734,784,433]
-      }]
-    },
-    options: {
-      title: {
-        display: true,
-        text: 'Connections per sec'
-      }
-    }
+            status: {}
 
         };
         this.renderPieChartData = this.renderPieChartData.bind(this);
     }
 
-
     componentDidMount() {
-        let es = new EventSource("/sse");
+        let es = new EventSource("/api/endpoint/");
 
         es.onmessage = function (event) {
-           // this.setState({status: JSON.parse(event.data)});
             this.setState({status: JSON.parse(event.data)});
-            //console.log(JSON.parse(this.state.status));
-
             console.log('test: ', this.state.status);
-            
         }.bind(this); //The callback is made in a different context. You need to bind to this in order to have access inside the callback
 
 
