@@ -8,7 +8,9 @@ export default class Registration extends React.Component {
     constructor() {
         super();
         this.state = {
-            registrationMessage: ""
+            registrationMessage: "",
+            upstreamListMessage: ""
+
         };
         this.handleClick = this
             .handleClick
@@ -41,19 +43,40 @@ export default class Registration extends React.Component {
 
     handleRemoveClick(event){
 
-        console.log("sup ", event.target.value);
+        //unset react state
+        this.setState({registrationMessage: ""});
 
-        //Update redux state
-        this.props.updateEndpointsRemove(event.target.value);
+        // Varibles 
+        const value = event.target.value;
+        const name = this.props.user.endPoints[value].name;
 
-        //Update mongodb
+        //Update Database
+        axios.put('/api/user/' + this.props.user.email + '/endpoint/delete' ,
+                {
+                    _id: this.props.user.endPoints[value]._id
+                })
+                .then(res => {
 
-        //Update list
-        //this.updateEndpointList();
+                    // Update redux state
+                    this.props.updateEndpointsRemove(value);
+
+                    //Update react state
+                    this.setState({upstreamListMessage: "Upstream " +  name + " removed"});
+                    console.log("all good!");
+
+                })
+                .catch(error => {
+                    // Update react state
+                    this.setState({upstreamListMessage: "Unable to remove upstream " + name});
+
+                })
+
     }
 
 
     handleClick(event) {
+        //unset react state
+        this.setState({registrationMessage: ""});
 
         if (this.refs.name.value.trim() === ""){
             console.log('Add a name');
@@ -65,9 +88,8 @@ export default class Registration extends React.Component {
             this.setState({registrationMessage: "Looks like an URI"})
 
 
-            axios.post('http://localhost:3000/api/endpoint/',
+            axios.post('/api/user/' + this.props.user.email + '/endpoint/add',
                 {
-                    email: this.props.user.email,
                     statusApiUrl: this.refs.url.value,
                     name: this.refs.name.value,
                     description: this.refs.description.value
@@ -77,10 +99,10 @@ export default class Registration extends React.Component {
                     console.log(res.data);
                     let doesExist = res.data;
                     if (doesExist.length !== 0 && res.data.found !== false){
-                        this.setState({registrationMessage: res.data.address + " (" + res.data.nginx_build + ")" + " was found"});
-                        
-                        console.log(res.data.address + " (" + res.data.nginx_build + ")" + " was found");
-        
+                        this.setState({registrationMessage: "Status API for Upstream found, with shared memory zone " + res.data.zone});
+
+                        console.log("Status API for Upstream found, with shared memory zone " + res.data.zone);
+
                         //Update redux state
                         this.updateEndpointList();
 
@@ -91,13 +113,13 @@ export default class Registration extends React.Component {
 
                     }
                     else{
-                     this.setState({registrationMessage: "Unable to connect to a status API at " + this.refs.url.value});
+                     this.setState({registrationMessage: "Unable to connect to the status API: " + res.data.comment});
 
                     }
                 })
                 .catch(error => {
                         console.log(error)
-                        this.setState({registrationMessage: "Unable to connect to a status API at " + this.refs.url.value});
+                        this.setState({registrationMessage: "Unable to connect to the status API: " + res.data.comment});
                 })
 
 
@@ -113,19 +135,20 @@ render() {
 
         return (
             <div>
-                <h2>My Servers</h2>
+                <h2>My Upstreams</h2>
                  <strong>user: {this.props.user.email}</strong>
 
-                <p>Enter the url to Live Activity Monitoring API Address (JSON output).</p>
+                <p>Enter the url toLive Activity Monitoring API Address of the Upstream (JSON output).<br/>e.g. https://demo.nginx.com/status/upstreams/trac-backend</p>
                 <p>For more information on configuration please visit the <a href="https://www.nginx.com/resources/admin-guide/logging-and-monitoring/" target="_blank">logging and monitoring guide</a></p>
-                 <h4>Add Server</h4>
+                 <h4>Add Upstream</h4>
                 <label>Name: </label><input type="text" ref="name"/>
                 <label>Status API Address:</label><input type="url" ref="url"/>
                 <label>Description (Optional) :</label><input type="text" ref="description"/>
 
                          <div>{this.state.registrationMessage}</div>
                     <button type="submit" onClick={this.handleClick}>Add</button>
-                <h4>Server List</h4>
+                <h4>Upstream List</h4>
+                <div>{this.state.upstreamListMessage}</div>
                                     <ul>
 
                             {this.props.user.endPoints.slice(0).reverse().map((endPoint, key) => {

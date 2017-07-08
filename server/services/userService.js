@@ -47,8 +47,15 @@ export let updateUser = (u, next) => {
 
 /* Add status API url to User profile  */
 
-export let putEndpoint = (email, endPoint, next) => {
+export let addEndpoint = (email, endPoint, next) => {
   User.findOneAndUpdate({email: email}, { $push: {endPoint: endPoint}}, next);
+};
+
+/*
+ * Check if Status API on remote NGINX server EXISTS
+ */
+export let deleteEndpoint = (email, _id, next) => {
+  User.findOneAndUpdate({email: email}, { $pull: {endPoint: { _id: _id }}}, next);
 };
 
 /* DELETE User profile */

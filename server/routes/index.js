@@ -143,10 +143,31 @@ export default(app, sse) => {
         });
     });
 
-    /* Check to see remote NGINX status API exists*/
-    app.post('/api/endpoint/', (req, res) => {
-        console.log(req.body);
-        statusApiService.checkStatusApi(req.body, (data, err) => { //if err is ordered first i.e (err,data) , err always is returned ...WHY?
+    /* Add upstream - Check to see remote NGINX status API exists first then add*/
+    app.put('/api/user/:id/endpoint/delete', (req, res) => {
+        userService.deleteEndpoint(req.params.id,req.body._id, (err, data) => { //this doesnt work when data is set first i.e.(data,err) 
+            if (!err) {
+                console.log("GOOD, response is: ",data);
+                res.status(200)
+                res.json(data);
+            } else {
+                console.log("BAD, response is: ",err);
+                res.status(400)
+                res.json(err);
+            }
+        });
+    });
+
+    /* Add upstream - Check to see remote NGINX status API exists first then add*/
+    app.post('/api/user/:id/endpoint/add', (req, res) => {
+        statusApiService.checkStatusApi(
+            {
+                    email: req.params.id,
+                    name: req.body.name,
+                    statusApiUrl: req.body.statusApiUrl,
+                    description: req.body.description,
+                    upStreamConfUrl: ""
+                }, (data, err) => { 
             if (!err) {
                 console.log("GOOD, response is: ",data);
                 res.status(200)

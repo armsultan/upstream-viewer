@@ -10,7 +10,7 @@ import Register from './Register';
 import Login from './Login';
 import UserTodoList from './UserTodoList';
 import UpstreamView from './UpstreamView';
-import MyServers from './MyServers';
+import MyUpstreams from './MyUpstreams';
 
 // Redux requires to give a correct mapping of what State should ultimately look
 // like. State is how React and Redux work. What the method below is doing is
@@ -71,11 +71,11 @@ class App extends React.Component {
                             path="/register"
                             render={(routeProps) => <Register {...this.props} {...routeProps}/>}/>
 
-                        <Link to="/myservers">My Servers</Link>
+                        <Link to="/myupstreams">My Upstreams</Link>
                         <Route
                             exact
-                            path="/myservers"
-                            render={(routeProps) => <MyServers {...this.state} {...this.props} {...routeProps}/>}/>
+                            path="/myupstreams"
+                            render={(routeProps) => <MyUpstreams {...this.state} {...this.props} {...routeProps}/>}/>
 
                         <Link to="/upstreamView">Upstream test</Link>
                         <Route

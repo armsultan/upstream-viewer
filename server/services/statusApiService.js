@@ -16,39 +16,30 @@ let createEndpoint = (body, callback) => {
 
 EndPoint.create(
     {
-    name: body.name,
-    statusApiUrl: body.statusApiUrl,
-    description: body.description
+        name: body.name,
+        statusApiUrl: body.statusApiUrl,
+        description: body.description
     }
 , callback);
 }
 
 
-/*
- * Check if Status API on remote NGINX server EXISTS
- */
 
 export let checkStatusApi = (body, callback) => {
 
     // Fetch the entire NGINX Status and check for the Address Field to confirm API
-    // exists
-
-    // default fail response
-    let rFail = {
-                "found": false,
-                "comment": "Fail"
-                };
+    // exists then adds endpoint to user
 
     axios
         .get(body.statusApiUrl)
         .then(response => {
 
-            if(response.data !== undefined){
+            if(response.data.zone !== undefined){
 
-            console.log("API Check Status: Found");
-            console.log("Address: " + response.data.address);
+            console.log("Status API for Upstream found");
+            console.log("Zone: " + response.data.zone);
 
-                    userService.putEndpoint(body.email, {
+                    userService.addEndpoint(body.email, {
 
                         name: body.name,                   /*Name of the Endpoint (NGINX Cluster)*/
                         statusApiUrl: body.statusApiUrl,           /*URL to the NGINX STATUS API*/
@@ -64,11 +55,10 @@ export let checkStatusApi = (body, callback) => {
                              }
                              });
 
-            let r = {
+            const r = {
                 "found": true,
                 "comment": "Success",
-                "address": response.data.address,
-                "nginx_build": response.data.nginx_build,
+                "zone": response.data.zone,
                 "timestamp": response.data.timestamp
             };
 
@@ -76,14 +66,23 @@ export let checkStatusApi = (body, callback) => {
 
         }
             else{
-                console.log("API Check Status: Failed");
+                console.log("API Check Status: Not an Upstream");
+
+                const rFail = {
+                "found": false,
+                "comment": "Not an Upstream"
+                };
+
                 callback(rFail);
             }
         })
         .catch(error => {
             console.log(error);
             console.log("API Check Status: Failed");
-
+               const rFail = {
+                "found": false,
+                "comment": "Unable to connect"
+                };
             callback(rFail);
         });
 
