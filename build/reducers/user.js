@@ -12,6 +12,11 @@ let user = (state = {}, action) => {
             updatedUser.email = action.user.email;
             updatedUser.endPoints = action.user.endPoint;
             return updatedUser;
+        case 'USER_LOGOUT':
+            let logoutUser = Object.assign({}, state);
+            updatedUser.email = "";
+            updatedUser.endPoints = [];
+            return logoutUser;
         case 'ADD_ENDPOINT':
             let updatedUser1 = Object.assign({}, state);
             updatedUser1.endPoints = action.user.endPoint;

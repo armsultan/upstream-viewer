@@ -16,8 +16,13 @@ export default class UpstreamView extends React.Component {
         this.renderPieChartData = this.renderPieChartData.bind(this);
     }
 
-    componentDidMount() {
-        let es = new EventSource("/api/endpoint/");
+    componentWillMount() {
+        console.log(this.props.match.params.id);
+
+        let es = new EventSource("/api/user/" + this.props.user.email + "/endpoint/" + this.props.match.params.id);
+
+
+      //  let es = new EventSource("/api/endpoint/");
 
         es.onmessage = function (event) {
             this.setState({status: JSON.parse(event.data)});

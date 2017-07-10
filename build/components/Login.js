@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import store from '../AppStore'
 import * as actionCreator from '../actions/actionCreator'
+import {BrowserRouter, Route, Switch, Link, Redirect} from 'react-router-dom';
 
 export default class Login extends React.Component {
     constructor() {
@@ -39,6 +40,9 @@ export default class Login extends React.Component {
                 this.refs.email.value="";
                 this.refs.password.value="";
 
+                // Redirect page
+                this.props.history.push("/myupstreams");
+
                 }
                 else {
                 console.log('Login Failed');
@@ -46,7 +50,6 @@ export default class Login extends React.Component {
                 this.refs.password.value="";
                 }
 
-               
 
             })
             .catch(error => {
@@ -68,6 +71,14 @@ export default class Login extends React.Component {
                 <label>Password:
                     <input type="password" ref="password"/></label><br/>
                 <button type="button" onClick={this.handleClick}>Login</button>
+                <div>or  <Link to="/register">Register</Link></div>
+
+                        <Route
+                            exact
+                            path="/register"
+                            render={(routeProps) => <Register {...this.props} {...routeProps}/>}/>
+
+                
                  <div>{this.state.loginMessage}</div>
             </div>
         );

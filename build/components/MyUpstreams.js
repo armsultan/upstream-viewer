@@ -46,7 +46,7 @@ export default class Registration extends React.Component {
         //unset react state
         this.setState({registrationMessage: ""});
 
-        // Varibles 
+        // Varibles
         const value = event.target.value;
         const name = this.props.user.endPoints[value].name;
 
@@ -136,8 +136,6 @@ render() {
         return (
             <div>
                 <h2>My Upstreams</h2>
-                 <strong>user: {this.props.user.email}</strong>
-
                 <p>Enter the url toLive Activity Monitoring API Address of the Upstream (JSON output).<br/>e.g. https://demo.nginx.com/status/upstreams/trac-backend</p>
                 <p>For more information on configuration please visit the <a href="https://www.nginx.com/resources/admin-guide/logging-and-monitoring/" target="_blank">logging and monitoring guide</a></p>
                  <h4>Add Upstream</h4>
@@ -154,8 +152,9 @@ render() {
                             {this.props.user.endPoints.slice(0).reverse().map((endPoint, key) => {
                                 let reverseKey = this.props.user.endPoints.length - key - 1;
                                     return (
-                                        <li className="endPoint" key={key}>
-                                           {reverseKey}, {endPoint.name},  {endPoint.statusApiUrl}, {endPoint.description}
+                                        <li className="endPoint" key={reverseKey}>
+                                           {/*<link to={'/upstreamview/' + endPoint._id}>{endPoint.name}</link>*/}
+                                            <Link to={'/upstreamview/' + endPoint._id}>{endPoint.name}</Link>
                                              <button type="button" value={reverseKey} onClick={this.handleRemoveClick}>Remove</button>
 
                                         </li>
@@ -163,7 +162,6 @@ render() {
                                 })
                                 }
                         </ul>
-
 </div>
         );
     }

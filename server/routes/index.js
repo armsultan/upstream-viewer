@@ -14,6 +14,46 @@ export default(app, sse) => {
         res.render('index');
     });
 
+
+  app.get('/api/user/:id/endpoint/:eid', (req, res) => {
+
+    userService.readUser({
+            email: req.params.id,
+            'endPoint._id':req.params.eid
+        }, (err, data) => {
+            if (!err) {
+                //console.log("Status API URL found: " + data[0].endPoint[0].statusApiUrl)
+                res.setHeader('Content-Type', 'text/event-stream');
+                /* MORE RELIABLE AsyncPolling with this.stop to prevent errors*/
+                AsyncPolling(function (end) {
+                    statusApiService.fetchUpstream(data[0].endPoint[0].statusApiUrl, (data,err) => {
+                        console.log(`data: ${data}\n\n`);
+                        if (!err) {
+                            res.write(`data: ${data}\n\n`);
+                            res.status(200)
+                            res.end();
+
+                        }
+                        else{
+                            console.log("error");
+                            res.write(`data: ${err}\n\n`);
+                            res.status(200)
+                            res.end();
+                        }
+                    });
+                    // Then notify the polling when your job is done:
+                    this.stop();
+                    end();
+                    // This will schedule the next call here
+                }, 3000).run();
+            } else {
+                res.status(400)
+                res.json(err);
+            }
+        });
+
+  });
+
     app.get('/api/endpoint/', (req, res) => {
 
         res.setHeader('Content-Type', 'text/event-stream');
@@ -21,9 +61,6 @@ export default(app, sse) => {
          /* MORE RELIABLE AsyncPolling with this.stop to prevent errors*/
         AsyncPolling(function (end) {
             statusApiService.fetchUpstream('https://demo.nginx.com/status/upstreams/trac-backend', (data,err) => {
-                // res.write(`data: ${data}\n\n`);
-                // res.status(200)
-                // res.end();
                 console.log(`data: ${data}\n\n`);
                 if (!err) {
                     res.write(`data: ${data}\n\n`);

@@ -3,19 +3,18 @@
  */
 
 // User Login
-// export let userLogin = (email) => {
-//     console.log('dispatch userLogin');
-//     return {
-//         type: 'USER_LOGIN',
-//         email
-//     };
-// }
-
 export let userLogin = (user) => {
     console.log('dispatch userLogin');
     return {
         type: 'USER_LOGIN',
         user
+    };
+}
+
+export let userLogout = () => {
+    console.log('dispatch userLogout');
+    return {
+        type: 'USER_LOGOUT'
     };
 }
 

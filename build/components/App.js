@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import {BrowserRouter, Route, Switch, Link, withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
@@ -49,40 +49,91 @@ class App extends React.Component {
             removeTodo={this.props.removeTodo}/>
     }
 
+
+loginStatus(){
+
+    if(this.props.user.email){
+        // User is Loggedin: Redirect to 'My Upstreams' page
+        this.props.history.push("/myupstreams");
+    }
+    else{
+       // User is Loggedin: Redirect to 'Login' page
+        this.props.history.push("/login");
+    }
+
+
+}
+signOut(){
+        //redux setstate
+        this.props.userLogout();
+}
+
+showLoginStatus(){
+
+    if(this.props.user.email){
+        return (
+            <div><h6>Signed in: {this.props.user.email}</h6><span><Link to="/" ><button type="button" onClick={this.signOut}>Signout</button></Link></span></div>
+            
+        );
+    }
+    else{
+         return (
+            <h6>Signed out: Please <Link to="/login">Login</Link> or <Link to="/register">Register</Link> </h6>
+        );
+    }
+    
+    
+}
+
     render() {
+
         return (
             <div>
             <BrowserRouter>
             <div className="row">
-                        <Link to="/">Home</Link><br/>{/* <Link to="/users">Users</Link>
+            
+<div>{this.showLoginStatus()}</div>
+
+{/*<Route exact path="/" render={() => (
+  this.props.user.email === "" ? (
+    <Redirect to="/login"/>
+  ) : (
+    <Login/>
+  )
+)}/>*/}
+
+                        {/*  <Link to="/">Home</Link><br/>
+                       <Link to="/users">Users</Link>
                     <Route exact path="/users" render={(routeProps) => <UserTodoList {...this.props} {...routeProps} />} />
                     <Route path="/users/:id/todo" render={this.navigateToSingleUser} /> */}
 
-                        <Link to="/login">Login</Link>
+                          {/* <Link to="/login">Login</Link> */}
                         <Route
                             exact
                             path="/login"
                             render={(routeProps) => <Login {...this.props} {...routeProps}/>}/>
 
 
-                        <Link to="/register">Register</Link>
                         <Route
                             exact
                             path="/register"
                             render={(routeProps) => <Register {...this.props} {...routeProps}/>}/>
 
-                        <Link to="/myupstreams">My Upstreams</Link>
                         <Route
                             exact
                             path="/myupstreams"
                             render={(routeProps) => <MyUpstreams {...this.state} {...this.props} {...routeProps}/>}/>
 
-                        <Link to="/upstreamView">Upstream test</Link>
                         <Route
                             exact
-                            path="/upstreamView"
+                            path="/upstreamview/:id"
                             render={(routeProps) => <UpstreamView {...this.state} {...this.props} {...routeProps}/>}/>
-</div>
+
+                        <Route
+                            exact
+                            path="/upstreamview/"
+                            render={(routeProps) => <UpstreamView {...this.state} {...this.props} {...routeProps}/>}/>
+                </div>
             </BrowserRouter>
             </div>
         );
