@@ -154,7 +154,7 @@ render() {
                                     return (
                                         <li className="endPoint" key={reverseKey}>
                                            {/*<link to={'/upstreamview/' + endPoint._id}>{endPoint.name}</link>*/}
-                                            <Link to={'/upstreamview/' + endPoint._id}>{endPoint.name}</Link>
+                                            <Link to={'/upstreamview/' + endPoint._id} alt={endPoint.name}>{endPoint.name}</Link>
                                              <button type="button" value={reverseKey} onClick={this.handleRemoveClick}>Remove</button>
 
                                         </li>

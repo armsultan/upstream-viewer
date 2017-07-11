@@ -52,10 +52,10 @@ export default class Registration extends React.Component {
                             password: password
                         })
                             .then(res => {
-                                console.log('We have registered a new user ', res.data.email);
-
+                                console.log('We have registered a New user ', res.data.email);
+                                
                                 //redux setstate
-                                this.props.userLogin(res.data);
+                                this.props.userLogin(res.data[0]);
 
                                 //unset values
                                 this.refs.email.value="";

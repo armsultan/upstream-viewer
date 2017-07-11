@@ -13,26 +13,28 @@ import axios from 'axios';
 * C R U D : All Functions work with one or many depending on the query (u) passed in
 */
 
-/* READ (Get) User profile */
+/* Create User profile */
 export let createUser = (u, next) => {
 
-// Check if User Exists
-  axios.get('/api/user/' + u.email)
-      .then(res => {
-
-          if(res._id !== "" ){
-            User.create(u, next);
-          }
-
-      })
-      .catch(error => {
-          console.log(error)
-          this.setState({registrationError: "Unable to register at this time"});
-      })
+User.create(u, next);
 
 
+  // axios.get('/api/user/' + u.email)
+  //     .then(res => {
 
-  User.create(u, next);
+  //         if(res._id !== "" ){
+  //           User.create(u, next);
+  //         }
+
+  //     })
+  //     .catch(error => {
+  //         console.log(error)
+  //         this.setState({registrationError: "Unable to register at this time"});
+  //     })
+
+
+
+  //User.create(u, next);
 };
 
 /* READ (Get) User profile */

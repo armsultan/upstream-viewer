@@ -31,24 +31,8 @@ let mapDispatchToProps = (dispatch) => {
 class App extends React.Component {
     constructor() {
         super();
-        this.navigateToSingleUser = this
-            .navigateToSingleUser
-            .bind(this);
-    }
 
-    navigateToSingleUser(routeProps) {
-        console.log(routeProps);
-        let user = this
-            .props
-            .users
-            .filter(user => user._id === routeProps.match.params.id)[0];
-        return <Todo
-            {...user}
-            {...routeProps}
-            addTodo={this.props.addTodo}
-            removeTodo={this.props.removeTodo}/>
     }
-
 
 loginStatus(){
 
@@ -65,7 +49,8 @@ loginStatus(){
 }
 signOut(){
         //redux setstate
-        this.props.userLogout();
+        //this.props.userLogout();
+        this.props.userLogin({email : "",endPoints: []});
 }
 
 showLoginStatus(){
@@ -73,7 +58,6 @@ showLoginStatus(){
     if(this.props.user.email){
         return (
             <div><h6>Signed in: {this.props.user.email}</h6><span><Link to="/" ><button type="button" onClick={this.signOut}>Signout</button></Link></span></div>
-            
         );
     }
     else{
@@ -86,28 +70,13 @@ showLoginStatus(){
 }
 
     render() {
-
+           <Link to="/" ><button type="button" onClick={this.signOut}>Signout</button></Link>
         return (
             <div>
             <BrowserRouter>
             <div className="row">
             
 <div>{this.showLoginStatus()}</div>
-
-{/*<Route exact path="/" render={() => (
-  this.props.user.email === "" ? (
-    <Redirect to="/login"/>
-  ) : (
-    <Login/>
-  )
-)}/>*/}
-
-                        {/*  <Link to="/">Home</Link><br/>
-                       <Link to="/users">Users</Link>
-                    <Route exact path="/users" render={(routeProps) => <UserTodoList {...this.props} {...routeProps} />} />
-                    <Route path="/users/:id/todo" render={this.navigateToSingleUser} /> */}
-
-                          {/* <Link to="/login">Login</Link> */}
                         <Route
                             exact
                             path="/login"

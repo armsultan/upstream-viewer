@@ -22,7 +22,6 @@ export default(app, sse) => {
             'endPoint._id':req.params.eid
         }, (err, data) => {
             if (!err) {
-                //console.log("Status API URL found: " + data[0].endPoint[0].statusApiUrl)
                 res.setHeader('Content-Type', 'text/event-stream');
                 /* MORE RELIABLE AsyncPolling with this.stop to prevent errors*/
                 AsyncPolling(function (end) {
@@ -141,7 +140,7 @@ export default(app, sse) => {
                 res.json(data);
             } else {
                 res.status(400)
-                res.json(err);
+                res.json(err.errmsg);
             }
         });
     });
