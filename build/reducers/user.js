@@ -14,17 +14,17 @@ let user = (state = {}, action) => {
             return updatedUser;
         case 'USER_LOGOUT':
             let logoutUser = Object.assign({}, state);
-            updatedUser.email = "";
-            updatedUser.endPoints = [];
+            logoutUser.email = ""; //reset element
+            logoutUser.endPoints = []; //reset element
             return logoutUser;
         case 'ADD_ENDPOINT':
-            let updatedUser1 = Object.assign({}, state);
-            updatedUser1.endPoints = action.user.endPoint;
-            return updatedUser1;
+            let addEndpointUser = Object.assign({}, state);
+            addEndpointUser.endPoints = action.user.endPoint;
+            return addEndpointUser;
         case 'REMOVE_ENDPOINT':
-            let updatedUser2 = Object.assign({}, state);
-            updatedUser2.endPoints.splice(action.endpointIndex, 1); //remove element
-            return updatedUser2;
+            let removeEnpointUser = Object.assign({}, state);
+            removeEnpointUser.endPoints.splice(action.endpointIndex, 1); //remove element
+            return removeEnpointUser;
         default:
         return state;
     }

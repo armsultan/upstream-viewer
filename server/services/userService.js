@@ -16,25 +16,8 @@ import axios from 'axios';
 /* Create User profile */
 export let createUser = (u, next) => {
 
-User.create(u, next);
+  User.create(u, next);
 
-
-  // axios.get('/api/user/' + u.email)
-  //     .then(res => {
-
-  //         if(res._id !== "" ){
-  //           User.create(u, next);
-  //         }
-
-  //     })
-  //     .catch(error => {
-  //         console.log(error)
-  //         this.setState({registrationError: "Unable to register at this time"});
-  //     })
-
-
-
-  //User.create(u, next);
 };
 
 /* READ (Get) User profile */

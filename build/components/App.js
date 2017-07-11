@@ -31,7 +31,9 @@ let mapDispatchToProps = (dispatch) => {
 class App extends React.Component {
     constructor() {
         super();
-
+        this.signOut = this
+            .signOut
+            .bind(this);
     }
 
 loginStatus(){
@@ -49,15 +51,15 @@ loginStatus(){
 }
 signOut(){
         //redux setstate
-        //this.props.userLogout();
-        this.props.userLogin({email : "",endPoints: []});
+        this.props.userLogout();
+        //this.props.userLogin({email : "",endPoints: []});
 }
 
 showLoginStatus(){
 
     if(this.props.user.email){
         return (
-            <div><h6>Signed in: {this.props.user.email}</h6><span><Link to="/" ><button type="button" onClick={this.signOut}>Signout</button></Link></span></div>
+            <div><h6>Signed in: {this.props.user.email}</h6><span><Link to="/" onClick={this.signOut}>Signout</Link></span></div>
         );
     }
     else{
@@ -70,7 +72,6 @@ showLoginStatus(){
 }
 
     render() {
-           <Link to="/" ><button type="button" onClick={this.signOut}>Signout</button></Link>
         return (
             <div>
             <BrowserRouter>
@@ -100,8 +101,9 @@ showLoginStatus(){
 
                         <Route
                             exact
-                            path="/upstreamview/"
+                            path="/upstreamview"
                             render={(routeProps) => <UpstreamView {...this.state} {...this.props} {...routeProps}/>}/>
+                        
                 </div>
             </BrowserRouter>
             </div>

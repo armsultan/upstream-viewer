@@ -18,8 +18,7 @@ export default class UpstreamView extends React.Component {
 
     componentWillMount() {
         console.log(this.props.match.params.id);
-
-        let es = new EventSource("/api/user/" + this.props.user.email + "/endpoint/" + this.props.match.params.id);
+        let es = new EventSource("/api/user/" + this.props.user.email + "/upstreamview/" + this.props.match.params.id);
 
 
       //  let es = new EventSource("/api/endpoint/");

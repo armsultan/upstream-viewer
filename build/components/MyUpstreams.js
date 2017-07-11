@@ -136,12 +136,12 @@ render() {
         return (
             <div>
                 <h2>My Upstreams</h2>
-                <p>Enter the url toLive Activity Monitoring API Address of the Upstream (JSON output).<br/>e.g. https://demo.nginx.com/status/upstreams/trac-backend</p>
+                <p>Enter the url to a Live Activity Monitoring API Address of the Upstream (JSON output).<br/>e.g. https://demo.nginx.com/status/upstreams/trac-backend</p>
                 <p>For more information on configuration please visit the <a href="https://www.nginx.com/resources/admin-guide/logging-and-monitoring/" target="_blank">logging and monitoring guide</a></p>
                  <h4>Add Upstream</h4>
-                <label>Name: </label><input type="text" ref="name"/>
-                <label>Status API Address:</label><input type="url" ref="url"/>
-                <label>Description (Optional) :</label><input type="text" ref="description"/>
+                <label>Name: </label><input type="text" ref="name" placeholder="e.g. Example Inc Production"/>
+                <label>Status API Address:</label><input type="url" ref="url" placeholder="e.g. https://internal.example.com/status/upstreams/production"/>
+                <label>Description (Optional) :</label><input type="text" ref="description" placeholder="e.g. Production traffic"/>
 
                          <div>{this.state.registrationMessage}</div>
                     <button type="submit" onClick={this.handleClick}>Add</button>
@@ -153,7 +153,6 @@ render() {
                                 let reverseKey = this.props.user.endPoints.length - key - 1;
                                     return (
                                         <li className="endPoint" key={reverseKey}>
-                                           {/*<link to={'/upstreamview/' + endPoint._id}>{endPoint.name}</link>*/}
                                             <Link to={'/upstreamview/' + endPoint._id} alt={endPoint.name}>{endPoint.name}</Link>
                                              <button type="button" value={reverseKey} onClick={this.handleRemoveClick}>Remove</button>
 
@@ -162,6 +161,9 @@ render() {
                                 })
                                 }
                         </ul>
+<Link to={'/api/user/' + this.props.user.email + '/upstreamview/5964668fc35bde887a93b865'}>test</Link>
+<Link to={'upstreamview'}>test</Link>
+
 </div>
         );
     }

@@ -102,11 +102,11 @@ export default class Registration extends React.Component {
                 <h2>Registration</h2>
                 <div>
                     <label>Email:
-                        <input type="email" ref="email"/></label><br/>
+                        <input type="email" ref="email" placeholder="name@isp.com"/></label><br/>
                     <label>Password:
-                        <input type="password" ref="password"/></label><br/>
+                        <input type="password" ref="password" placeholder="Password"/></label><br/>
                     <label>Confirm Password:
-                        <input type="password" ref="passwordConfirm"/></label><br/>
+                        <input type="password" ref="passwordConfirm" placeholder="Password"/></label><br/>
                     <button type="submit" onClick={this.handleClick}>Register</button>
                 </div>
                                 <div>{this.state.registrationMessage}</div>

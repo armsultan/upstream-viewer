@@ -67,12 +67,10 @@ export default class Login extends React.Component {
             <div>
                 <h2>Login</h2>
                 <label>Email:
-                    <input type="email" ref="email"/></label><br/>
+                    <input type="email" ref="email" placeholder="name@isp.com"/></label><br/>
                 <label>Password:
-                    <input type="password" ref="password"/></label><br/>
+                    <input type="password" ref="password" placeholder="Password"/></label><br/>
                 <button type="button" onClick={this.handleClick}>Login</button>
-                <div>or  <Link to="/register">Register</Link></div>
-
                         <Route
                             exact
                             path="/register"

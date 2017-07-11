@@ -15,8 +15,8 @@ export default(app, sse) => {
     });
 
 
-  app.get('/api/user/:id/endpoint/:eid', (req, res) => {
-
+  app.get('/api/user/:id/upstreamview/:eid', (req, res) => {
+    console.log("email is " + req.params.id + " and endpoint is "+ req.params.id);
     userService.readUser({
             email: req.params.id,
             'endPoint._id':req.params.eid
@@ -53,7 +53,7 @@ export default(app, sse) => {
 
   });
 
-    app.get('/api/endpoint/', (req, res) => {
+    app.get('/upstreamview/:id', (req, res) => {
 
         res.setHeader('Content-Type', 'text/event-stream');
 
