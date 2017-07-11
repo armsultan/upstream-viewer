@@ -10,8 +10,8 @@ export default class UpstreamView extends React.Component {
     constructor() {
         super();
         this.state = {
-            status: {}
-
+            status: {},
+            es: {}
         };
         this.renderPieChartData = this.renderPieChartData.bind(this);
     }
@@ -19,11 +19,11 @@ export default class UpstreamView extends React.Component {
     componentWillMount() {
         console.log(this.props.match.params.id);
         let es = new EventSource("/api/user/" + this.props.user.email + "/upstreamview/" + this.props.match.params.id);
+   //             this.setState(new EventSource("/api/user/" + this.props.user.email + "/upstreamview/" + this.props.match.params.id));
 
-
-      //  let es = new EventSource("/api/endpoint/");
-
-        es.onmessage = function (event) {
+         //  let es = new EventSource("/api/endpoint/");
+ //this.state.es.onmessage = function (event) {
+       es.onmessage = function (event) {
             this.setState({status: JSON.parse(event.data)});
             console.log('test: ', this.state.status);
         }.bind(this); //The callback is made in a different context. You need to bind to this in order to have access inside the callback
@@ -61,9 +61,6 @@ keepOnPage(e) {
         return (
             <div>
                 <h2>Upstream Dashboard</h2>
-
-                <p>This is a test for server event push:</p>
-
 
             {this.renderPieChartData()}
 

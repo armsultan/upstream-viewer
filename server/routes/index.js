@@ -16,7 +16,6 @@ export default(app, sse) => {
 
 
   app.get('/api/user/:id/upstreamview/:eid', (req, res) => {
-    console.log("email is " + req.params.id + " and endpoint is "+ req.params.id);
     userService.readUser({
             email: req.params.id,
             'endPoint._id':req.params.eid
@@ -215,5 +214,9 @@ export default(app, sse) => {
             }
         });
     });
+// Define Last as the 404 error page not found
+app.use(function (req, res, next) {
+  res.status(404).render("404")
+})
 
 }

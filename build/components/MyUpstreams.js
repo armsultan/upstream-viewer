@@ -153,7 +153,7 @@ render() {
                                 let reverseKey = this.props.user.endPoints.length - key - 1;
                                     return (
                                         <li className="endPoint" key={reverseKey}>
-                                            <Link to={'/upstreamview/' + endPoint._id} alt={endPoint.name}>{endPoint.name}</Link>
+                                            <Link to={'/upstreamview/' + endPoint._id} alt={"name: " + endPoint.name+ ", Description: " + endPoint.description}>{endPoint.name}</Link>
                                              <button type="button" value={reverseKey} onClick={this.handleRemoveClick}>Remove</button>
 
                                         </li>
@@ -161,8 +161,8 @@ render() {
                                 })
                                 }
                         </ul>
-<Link to={'/api/user/' + this.props.user.email + '/upstreamview/5964668fc35bde887a93b865'}>test</Link>
-<Link to={'upstreamview'}>test</Link>
+{/*<Link to={'/api/user/' + this.props.user.email + '/upstreamview/5964668fc35bde887a93b865'}>test</Link>
+<Link to={'upstreamview'}>test</Link>*/}
 
 </div>
         );

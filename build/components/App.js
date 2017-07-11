@@ -55,11 +55,11 @@ signOut(){
         //this.props.userLogin({email : "",endPoints: []});
 }
 
-showLoginStatus(){
+showNav(){
 
     if(this.props.user.email){
         return (
-            <div><h6>Signed in: {this.props.user.email}</h6><span><Link to="/" onClick={this.signOut}>Signout</Link></span></div>
+            <div><h6>Signed in: {this.props.user.email}</h6><span><Link to="/myupstreams">My Upstreams</Link></span> | <span><Link to="/" onClick={this.signOut}>Signout</Link></span></div>
         );
     }
     else{
@@ -77,7 +77,7 @@ showLoginStatus(){
             <BrowserRouter>
             <div className="row">
             
-<div>{this.showLoginStatus()}</div>
+<div>{this.showNav()}</div>
                         <Route
                             exact
                             path="/login"
@@ -103,7 +103,7 @@ showLoginStatus(){
                             exact
                             path="/upstreamview"
                             render={(routeProps) => <UpstreamView {...this.state} {...this.props} {...routeProps}/>}/>
-                        
+
                 </div>
             </BrowserRouter>
             </div>
