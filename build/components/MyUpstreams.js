@@ -45,6 +45,7 @@ export default class Registration extends React.Component {
 
         //unset react state
         this.setState({registrationMessage: ""});
+        this.setState({upstreamListMessage: ""});
 
         // Varibles
         const value = event.target.value;
@@ -77,6 +78,8 @@ export default class Registration extends React.Component {
     handleClick(event) {
         //unset react state
         this.setState({registrationMessage: ""});
+        this.setState({upstreamListMessage: ""});
+
 
         if (this.refs.name.value.trim() === ""){
             console.log('Add a name');
@@ -134,37 +137,88 @@ export default class Registration extends React.Component {
 render() {
 
         return (
-            <div>
-                <h2>My Upstreams</h2>
-                <p>Enter the url to a Live Activity Monitoring API Address of the Upstream (JSON output).<br/>e.g. https://demo.nginx.com/status/upstreams/trac-backend</p>
-                <p>For more information on configuration please visit the <a href="https://www.nginx.com/resources/admin-guide/logging-and-monitoring/" target="_blank">logging and monitoring guide</a></p>
-                 <h4>Add Upstream</h4>
-                <label>Name: </label><input type="text" ref="name" placeholder="e.g. Example Inc Production"/>
-                <label>Status API Address:</label><input type="url" ref="url" placeholder="e.g. https://internal.example.com/status/upstreams/production"/>
-                <label>Description (Optional) :</label><input type="text" ref="description" placeholder="e.g. Production traffic"/>
+            <div className="row">
+                <div className="row">
+                    <div className="col s12">
+                        <h2>My Upstreams</h2>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col s12">
+                        <p>Enter the url to a Live Activity Monitoring API Address of the Upstream (JSON output).<br/>e.g. https://demo.nginx.com/status/upstreams/trac-backend</p>
+                        <p>For more information on configuration please visit the <a href="https://www.nginx.com/resources/admin-guide/logging-and-monitoring/" target="_blank">logging and monitoring guide</a></p>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col s12">
+                        <h4>Add Upstream</h4>
+                    </div>
+                </div>
 
+
+
+                <div className="row">
+                    <div className="input-field col s12">
+                        <i className="material-icons prefix">label</i>
+                        <input type="text" ref="name" className="validate" placeholder="e.g. Example Inc Production"/>
+                        <label className="active">Name</label>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="input-field col s12">
+                        <i className="material-icons prefix">equalizer</i>
+                        <input type="url" ref="url" className="validate" placeholder="e.g. https://internal.example.com/status/upstreams/production"/>
+                        <label className="active">Status API Address</label>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="input-field col s12">
+                        <i className="material-icons prefix">info_outline</i>
+                        <input type="text" ref="description" className="validate" placeholder="e.g. Production traffic"/>
+                        <label className="active">Description</label>
+                    </div>
+                </div>
+                
+                <div className="row">
+                    <div className="col s12">
                          <div>{this.state.registrationMessage}</div>
-                    <button type="submit" onClick={this.handleClick}>Add</button>
-                <h4>Upstream List</h4>
-                <div>{this.state.upstreamListMessage}</div>
-                                    <ul>
+                    </div>
+                </div>
+                
 
+                <div className="row">
+                    <div className="col s12">
+                        <button className="btn waves-effect waves-light" type="submit" onClick={this.handleClick}>Add</button>
+                    </div>
+                </div>
+
+
+                        <ul className="collection with-header">
+                            <li className="collection-header"> <h4>Upstream List</h4></li>
+
+
+                <li className="collection-header">
+                       {this.state.upstreamListMessage}
+                </li>
+   
                             {this.props.user.endPoints.slice(0).reverse().map((endPoint, key) => {
                                 let reverseKey = this.props.user.endPoints.length - key - 1;
                                     return (
-                                        <li className="endPoint" key={reverseKey}>
-                                            <Link to={'/upstreamview/' + endPoint._id} alt={"name: " + endPoint.name+ ", Description: " + endPoint.description}>{endPoint.name}</Link>
-                                             <button type="button" value={reverseKey} onClick={this.handleRemoveClick}>Remove</button>
-
+                                         <li className="collection-item avatar" key={reverseKey}>
+                                         <Link to={'/upstreamview/' + endPoint._id} alt={endPoint.name}><i className="material-icons circle green">insert_chart</i></Link>           
+                                            <span className="title"><Link to={'/upstreamview/' + endPoint._id} alt={endPoint.name}>{endPoint.name}</Link></span>
+                                            <p>{endPoint.description}<br/>
+                                                <small><a href={endPoint.statusApiUrl} target="_blank">{endPoint.statusApiUrl}</a></small>
+                                            </p>
+                                             <button className="secondary-content btn waves-effect waves-light" type="button" value={reverseKey} onClick={this.handleRemoveClick}>Remove</button>
                                         </li>
                                     )
                                 })
                                 }
                         </ul>
-{/*<Link to={'/api/user/' + this.props.user.email + '/upstreamview/5964668fc35bde887a93b865'}>test</Link>
-<Link to={'upstreamview'}>test</Link>*/}
-
-</div>
+            </div>
         );
     }
 

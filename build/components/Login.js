@@ -63,22 +63,44 @@ export default class Login extends React.Component {
 
     render() {
 
-        return (
-            <div>
-                <h2>Login</h2>
-                <label>Email:
-                    <input type="email" ref="email" placeholder="name@isp.com"/></label><br/>
-                <label>Password:
-                    <input type="password" ref="password" placeholder="Password"/></label><br/>
-                <button type="button" onClick={this.handleClick}>Login</button>
+    return (
+<form className="row">
+    <div className="row">
+        <div className="col s12">
+            <h2>Login</h2>
+        </div>
+    </div>
+   <div className="row">
+        <div className="input-field col s12">
+            <i className="material-icons prefix">email</i>
+            <input type="email" ref="email" className="validate"/>
+            <label className="active">Email</label>
+
+        </div>
+    </div>
+    <div className="row">
+        <div className="input-field col s12">
+            <i className="material-icons prefix">https</i>
+            <input type="password" ref="password" className="validate"/>
+            <label className="active">Password</label>
+        </div>
+    </div>
+    <div className="row">
+        <div className="col s12">
+            <div>{this.state.loginMessage}</div>
+        </div>
+    </div>
+    <div className="row">
+        <div className="col s12">
+            <button className="btn waves-effect waves-light" type="button" onClick={this.handleClick}>Login</button>
+        </div>
+    </div>
                         <Route
                             exact
                             path="/register"
                             render={(routeProps) => <Register {...this.props} {...routeProps}/>}/>
 
-                
-                 <div>{this.state.loginMessage}</div>
-            </div>
+    </form>
         );
     }
 }

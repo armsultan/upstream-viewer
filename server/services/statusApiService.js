@@ -164,14 +164,3 @@ let requestsPiechart = (data) => {
 
 return JSON.stringify(chart);
 }
-
-/*TESTS
-run 'node_modules/.bin/babel-node server/services/statusApiService.js'
-*/
-// setInterval(fetchStatus('http://demo.nginx.com/status'), 5000); # call back
-// erro!
-
-//test('https://demo.nginx.com/status/upstreams/trac-backend'); 
-
-// setInterval ( () => {
-// fetchStatus('http://demo.nginx.com/status/timestamp')  }, 1000);

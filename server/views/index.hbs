@@ -1,28 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Nginx Upstream manager</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="/main.css" rel="stylesheet">
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css" rel="stylesheet">
-    </head>
-    <body>
-    <h1>NGINX upstream viewer</h1>
-    <div class="container">
-        <div id="app"></div>
-</div>
 
-        <!-- 
+<head>
+    <title>Nginx Upstream manager</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> {{!--
+    <link href="/main.css" rel="stylesheet"> --}}
+    <link rel="icon" type="image/png" href="/images/favicon.ico" />
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+</head>
+
+<body>
+
+    <div className="container">
+        <div id="app"></div>
+
+<footer class="page-footer teal lighten-2">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">About</h5>
+                <p class="grey-text text-lighten-4">Live activity monitoring is a popular feature of NGINX Plus. This App is a <a class="grey-text text-lighten-4" src="https://heliotraining.com/" target="_blank" alt="Helio Training">Helio Training</a> "Full-Stack" project using NodeJS, React, Redux, MongoDB and more.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="https://www.nginx.com/" target="_blank">Nginx Inc.</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://www.nginx.com/products/live-activity-monitoring/" target="_blank">Live Activity Monitoring</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://www.nginx.com/blog/live-activity-monitoring-nginx-plus-3-simple-steps/" target="_blank">Live Activity Monitoring of NGINX Plus in 3 Simple Steps</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://www.nginx.com/products/feature-matrix/" target="_blank">Nginx Plus Feature Matrix</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            A <a class="grey-text text-lighten-4" src="https://heliotraining.com/" target="_blank" alt="Helio Training">Helio Training</a> project by Armand. 2017
+            </div>
+          </div>
+        </footer>
+
+       
+    </div>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+    <!--
             Notice we are referring to bundle.js as an absolute path to the root directory.
-            
             Bundle.js will not exist until we run our webpack process.
              -->
-        {{!--<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>--}}
-        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
-        <script src="/bundle.js"></script>
+    <script src="/bundle.js"></script>
 
-    </body>
+
+</body>
+
 </html>

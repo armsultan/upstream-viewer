@@ -214,9 +214,5 @@ export default(app, sse) => {
             }
         });
     });
-// Define Last as the 404 error page not found
-app.use(function (req, res, next) {
-  res.status(404).render("404")
-})
 
 }

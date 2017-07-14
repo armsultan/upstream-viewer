@@ -14,7 +14,10 @@ const router = (
     // Provider is Redux syntax to sync the store to the app.
     <Provider store={store}>
         {/* This is where we nest our App inside the Provider so anything that occurs inside our App will have access to our Store. It is good to nest only 1 element inside the Provider for that reason. */}
-            <App />
+      
+
+                      <App />
+
     </Provider>
 );
 

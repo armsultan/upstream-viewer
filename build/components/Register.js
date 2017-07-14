@@ -98,19 +98,48 @@ export default class Registration extends React.Component {
     render() {
 
         return (
-            <div>
-                <h2>Registration</h2>
-                <div>
-                    <label>Email:
-                        <input type="email" ref="email" placeholder="name@isp.com"/></label><br/>
-                    <label>Password:
-                        <input type="password" ref="password" placeholder="Password"/></label><br/>
-                    <label>Confirm Password:
-                        <input type="password" ref="passwordConfirm" placeholder="Password"/></label><br/>
-                    <button type="submit" onClick={this.handleClick}>Register</button>
+           <form className="row">
+                <div className="row">
+                    <div className="col s12">
+                        <h2>Registration</h2>
+                    </div>
                 </div>
-                                <div>{this.state.registrationMessage}</div>
-</div>
+             <div className="row">
+                 <div className="input-field col s12">
+                    <i className="material-icons prefix">email</i>
+                    <input type="email" ref="email" className="validate" placeholder="name@isp.com"/>
+                    <label className="active">Email</label>
+                </div>
+            </div>
+
+            <div className="row">
+                 <div className="input-field col s12">
+                    <i className="material-icons prefix">https</i>
+                    <input type="password" ref="password" className="validate" placeholder="Password"/>
+                    <label className="active">Password</label>
+                </div>
+            </div>
+
+            <div className="row">
+                 <div className="input-field col s12">
+                    <i className="material-icons prefix">https</i>
+                    <input type="password" ref="passwordConfirm" className="validate" placeholder="Password"/>
+                    <label className="active">Confirm Password</label>
+                </div>
+            </div>
+
+            <div className="row">
+                 <div className="col s12">
+                    <button className="btn waves-effect waves-light" type="submit" onClick={this.handleClick}>Register</button>
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col s12">
+                        {this.state.registrationMessage}
+                </div>
+            </div>
+        </form>
         );
     }
 }

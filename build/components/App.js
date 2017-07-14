@@ -8,7 +8,6 @@ import * as actionCreators from '../actions/actionCreator';
 // import BasicRouting from './BasicRouting';
 import Register from './Register';
 import Login from './Login';
-import UserTodoList from './UserTodoList';
 import UpstreamView from './UpstreamView';
 import MyUpstreams from './MyUpstreams';
 
@@ -59,25 +58,39 @@ showNav(){
 
     if(this.props.user.email){
         return (
-            <div><h6>Signed in: {this.props.user.email}</h6><span><Link to="/myupstreams">My Upstreams</Link></span> | <span><Link to="/" onClick={this.signOut}>Signout</Link></span></div>
-        );
+<ul id="nav-mobile" className="right hide-on-med-and-down">
+  <li>Signed in: {this.props.user.email}</li>
+        <li><Link to="/myupstreams">My Upstreams</Link></li>
+        <li><Link to="/" onClick={this.signOut}>Signout</Link></li>
+
+            {/*<div><h6>Signed in: {this.props.user.email}</h6><span><Link to="/myupstreams">My Upstreams</Link></span> | <span><Link to="/" onClick={this.signOut}>Signout</Link></span></div>*/}
+        </ul>);
     }
     else{
          return (
-            <h6>Signed out: Please <Link to="/login">Login</Link> or <Link to="/register">Register</Link> </h6>
+             <ul id="nav-mobile" className="right hide-on-med-and-down">
+              <li>Signed out:</li>
+               <li><Link to="/login">Login</Link></li>
+               <li><Link to="/register">Register</Link></li>
+           </ul>
         );
     }
-    
-    
 }
 
     render() {
         return (
-            <div>
             <BrowserRouter>
-            <div className="row">
-            
-<div>{this.showNav()}</div>
+                            <div >
+
+  <nav>
+    <div className="nav-wrapper teal lighten-2">
+      <a href="#" className="brand-logo"><img src="/images/logo.png" width="50px"/> Upstream Viewer</a>
+      {this.showNav()}
+    </div>
+  </nav>
+
+
+
                         <Route
                             exact
                             path="/login"
@@ -103,10 +116,9 @@ showNav(){
                             exact
                             path="/upstreamview"
                             render={(routeProps) => <UpstreamView {...this.state} {...this.props} {...routeProps}/>}/>
-
-                </div>
-            </BrowserRouter>
             </div>
+
+            </BrowserRouter>
         );
     }
 }
