@@ -102,6 +102,7 @@ export default class Registration extends React.Component {
                     console.log(res.data);
                     let doesExist = res.data;
                     if (doesExist.length !== 0 && res.data.found !== false){
+                        console.log("THIS IS IT: ",res.data)
                         this.setState({registrationMessage: "Status API for Upstream found, with shared memory zone " + res.data.zone});
 
                         console.log("Status API for Upstream found, with shared memory zone " + res.data.zone);
@@ -154,9 +155,6 @@ render() {
                         <h4>Add Upstream</h4>
                     </div>
                 </div>
-
-
-
                 <div className="row">
                     <div className="input-field col s12">
                         <i className="material-icons prefix">label</i>

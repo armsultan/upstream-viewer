@@ -12,21 +12,37 @@ export default class UpstreamView extends React.Component {
         this.es = null;
         this.state = {
             status: {},
-            es: {}
+            upstreamName: "",
+            upstreamDescription: "",
+            statusApiUrl:""
+
         };
         this.renderPieChartData = this.renderPieChartData.bind(this);
+        this.findUpstream = this.findUpstream.bind(this);
     }
 
+        findUpstream(e) {
+            return e._id === this.props.match.params.id;
+        }
+
     componentWillMount() {
-        console.log(this.props.match.params.id);
+        // console.log(this.props.match.params.id); // uncomment to test
         this.es = new EventSource("/api/user/" + this.props.user.email + "/upstreamview/" + this.props.match.params.id);
 
+        // Set State - pie chart data
         this.es.onmessage = function (event) {
             this.setState({status: JSON.parse(event.data)});
-            console.log('test: ', this.state.status);
         }.bind(this); //The callback is made in a different context. You need to bind to this in order to have access inside the callback
 
+        // Set State - this upstream
+        let upstream = this.props.user.endPoints.find(this.findUpstream);
+        this.setState({upstreamName: upstream.name});
+        this.setState({upstreamDescription: upstream.description});
+        this.setState({statusApiUrl: upstream.statusApiUrl});
 
+
+
+  console.log(upstream);
     }
     componentWillUnmount() {
         this.es.close();
@@ -43,8 +59,9 @@ export default class UpstreamView extends React.Component {
         return (
            <div className="row">
             <div className="col s12">
-                        
-                    <h2>Upstream Dashboard</h2>
+                    <h4><i className="small material-icons">insert_chart</i>{this.state.upstreamName}</h4>
+                    <p>{this.state.upstreamDescription}</p>
+                    <p> {this.state.statusApiUrl}</p>
                 </div>
                 {this.renderPieChartData()}
             </div>

@@ -9,8 +9,19 @@ import {EndPoint} from '../models/EndPoint';
 import {User} from '../models/User';
 
 import axios from 'axios';
-import randomColor from 'random-color';
+import randomColor from 'randomcolor';
 import * as userService from '../services/userService';
+
+// Randomize colors for graphs!
+//create an empty array with length 1000
+let colorsList = new Array(1000);
+// Create 1000 colors in an array
+for (let i=0; i< colorsList.length; i++) {
+        let color = randomColor();
+        colorsList[i] = randomColor();
+}
+console.log("Random colors generated: ", colorsList);
+
 
 let createEndpoint = (body, callback) => {
 
@@ -22,7 +33,6 @@ EndPoint.create(
     }
 , callback);
 }
-
 
 
 export let checkStatusApi = (body, callback) => {
@@ -115,12 +125,17 @@ export let fetchStatus = (url, callback) => {
  */
 export let fetchUpstream = (url, callback) => {
 
+
+
     //Fetch the entire NGINX Status
     axios
         .get(url)
         .then(function (response) {
-            //callback(response.data);
-            //console.log(requestsPiechart(response.data.peers)); //uncheck this line to test
+            let numOfNodes = Object
+                .keys(response.data.peers)
+                .length;
+            //console.log("Number of nodes: ", numOfNodes); //uncheck this line to test
+            //console.log("Data to process: ", response.data.peers); //uncheck this line to test
             callback(requestsPiechart(response.data.peers));
         })
         .catch(function (error) {
@@ -137,10 +152,9 @@ let requestsPiechart = (data) => {
     let labels = [];
     let backgroundColor = [];
     let requests =[];
-    data.forEach((value) => {
-        let color = randomColor();
+    data.forEach((value,index) => {
         labels.push(value.name)
-        backgroundColor.push(color.hexString());
+        backgroundColor.push(colorsList[index]); // get a color from the color array
         requests.push(value.requests)
     });
 

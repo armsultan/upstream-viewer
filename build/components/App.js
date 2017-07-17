@@ -33,6 +33,10 @@ class App extends React.Component {
         this.signOut = this
             .signOut
             .bind(this);
+
+        this.loginStatus = this
+            .loginStatus
+            .bind(this);
     }
 
 loginStatus(){
@@ -51,7 +55,6 @@ loginStatus(){
 signOut(){
         //redux setstate
         this.props.userLogout();
-        //this.props.userLogin({email : "",endPoints: []});
 }
 
 showNav(){
@@ -66,7 +69,7 @@ showNav(){
             {/*<div><h6>Signed in: {this.props.user.email}</h6><span><Link to="/myupstreams">My Upstreams</Link></span> | <span><Link to="/" onClick={this.signOut}>Signout</Link></span></div>*/}
         </ul>);
     }
-    else{
+    else{       
          return (
              <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li>Signed out:</li>
@@ -80,15 +83,14 @@ showNav(){
     render() {
         return (
             <BrowserRouter>
-                            <div >
+                    <div >
 
-  <nav>
-    <div className="nav-wrapper teal lighten-2">
-      <a href="#" className="brand-logo"><img src="/images/logo.png" width="50px"/> Upstream Viewer</a>
-      {this.showNav()}
-    </div>
-  </nav>
-
+                        <nav>
+                            <div className="nav-wrapper teal lighten-2">
+                            <a href="#" className="brand-logo"><img src="/images/logo.png" width="50px" className="circle" alt="logo"/> Upstream Viewer</a>
+                            {this.showNav()}
+                            </div>
+                        </nav>
 
 
                         <Route
