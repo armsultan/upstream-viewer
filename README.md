@@ -8,7 +8,7 @@ This App is Proof Of Concept to graph upstream data pulled from NGINX Pkus's Liv
 
 ## Installation
 First run the following command to install the required dependencies
- 
+
     npm install
 
 ## Run Application
@@ -17,18 +17,18 @@ Create three terminals and run:
 
 1. Make sure mongodb is running:
 
-	`sudo mongod` 
-	    
+	`sudo mongod`
+
 2. In another terminal, to get Webpack listening to your changes, run:
 
     `npm run build`
-    
+
 3. And lastly, start the package:
 
-	`npm start`
+	`HOST=localhost PORT=3000 DB=localhost/upstream_manager npm start`
+
+note: if you uncomment the line `// import env from './env';` in `server/server.js` node will use the environemental varibles in `server/env.js` and you can start the package by simply running `npm start`
 
 ## Run Unit Tests:
 
 	npm test
-	
-
