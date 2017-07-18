@@ -4,7 +4,7 @@ This App is a [Helio Training](https://heliotraining.com/) "Full-Stack" project 
 
 This App is Proof Of Concept to graph upstream data pulled from NGINX Pkus's Live activity monitoring. See An example of [NGINX Plus live activity monitoring.](http://demo.nginx.com/status.html) and  [JSON output](http://demo.nginx.com/status) for the same information.
 
-![Screenshot](/Users/armandsultantono/Documents/GIT/upstream_manager/public/images/screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/armsultan/upstream-manager/master/public/images/screenshot.png)
 
 ## Installation
 First run the following command to install the required dependencies
