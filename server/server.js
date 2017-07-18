@@ -33,12 +33,12 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 // connection string.
-mongoose.connect(`mongodb://localhost/${process.env.DB}`);
-
+// mongoose.connect(`mongodb://localhost/${process.env.DB}`); //for localhost testing uncomment here
+mongoose.connect(`mongodb://${process.env.DB}`); //Heroku
 let sse = null;
 
 app.listen(process.env.PORT, () => {
-  console.log(`Example app listening on port ${process.env.PORT}!`)
+  console.log(`Upstream viewer app listening on port ${process.env.PORT}!`)
 
   sse = new SSE(app);
   Routes(app, sse);
