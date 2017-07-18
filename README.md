@@ -27,7 +27,7 @@ Create three terminals and run:
 
 	`HOST=localhost PORT=3000 DB=localhost/upstream_manager npm start`
 
-note: if you uncomment the line `// import env from './env';` in `server/server.js` node will use the environemental varibles in `server/env.js` and you can start the package by simply running `npm start`
+note: if you uncomment the line `import env from './env';` in `server/server.js` node will use the environemental varibles in `server/env.js` and you can start the package by simply running `npm start`
 
 ## Run Unit Tests:
 
