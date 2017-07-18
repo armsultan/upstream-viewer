@@ -1,5 +1,5 @@
 'use strict';
-import env from './env';
+// import env from './env'; uncomment for local testing IF you want to use varibles from .env.js file
 import express from 'express';
 import handlebars from 'express-handlebars';
 import http from 'http';
