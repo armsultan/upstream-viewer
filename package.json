@@ -12,9 +12,12 @@
         "postinstall": "webpack",
         "test": "jest"
     },
-    "author": "",
+    "author": "Armand Sultantono",
     "license": "ISC",
     "devDependencies": {
+        "webpack-dev-middleware": "1.10.2"
+    },
+    "dependencies": {
         "babel-cli": "6.24.1",
         "babel-loader": "7.0.0",
         "babel-preset-es2015": "6.24.1",
@@ -23,9 +26,6 @@
         "babel-preset-stage-2": "6.24.1",
         "nodemon": "1.11.0",
         "webpack": "2.5.1",
-        "webpack-dev-middleware": "1.10.2"
-    },
-    "dependencies": {
         "async-polling": "0.2.1",
         "axios": "0.16.2",
         "body-parser": "1.17.1",
