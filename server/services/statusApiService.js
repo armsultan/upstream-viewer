@@ -38,10 +38,6 @@ EndPoint.create(
 export let checkStatusApi = (body, callback) => {
 
 
-    // Only Add Upstream if it does not already exist on the user
-    //enter logic here
-
-
     // Fetch the entire NGINX Status and check for the Address Field to confirm API
     // exists then adds endpoint to user
 

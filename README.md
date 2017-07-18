@@ -1,24 +1,30 @@
 # Upstream-manager
 
+This App is a [Helio Training](https://heliotraining.com/) "Full-Stack" project using NodeJS, React, Redux, MongoDB and more.
+
+This App is Proof Of Concept to graph upstream data pulled from NGINX Pkus's Live activity monitoring. See An example of [NGINX Plus live activity monitoring.](http://demo.nginx.com/status.html) and  [JSON output](http://demo.nginx.com/status) for the same information.
 
 ## Installation
+First run the following command to install the required dependencies
+ 
     npm install
 
-Test environment:
+## Run Application
 
-Create three terminals. Run
-    npm start
-In another terminal:
-    npm run build
-... to get Webpack listening to your changes
-and:
-    sudo mongod
-... get mongoDB started
+Create three terminals and run:
 
-Then Run
-    npm run build
+1. Make sure mongodb is running:
 
-... to get Webpack listening to your changes.# upstream-manager
+	`sudo mongod` 
+	    
+2. In another terminal, to get Webpack listening to your changes, run:
 
-Run Unit Tests:
-    npm test
+    `npm run build`
+    
+3. And lastly, start the package:
+
+	`npm start`
+
+## Run Unit Tests:
+
+	npm test

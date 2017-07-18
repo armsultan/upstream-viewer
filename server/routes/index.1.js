@@ -21,17 +21,12 @@ export default(app, sse) => {
             'endPoint._id':req.params.eid
         }, (err, data) => {
             if (!err) {
-
-                // Find the correct upstream data from the user's enpoint array
-                let upstream = data[0].endPoint.find((e) => {
-                    return e._id.toString() === req.params.eid;
-                });
-
-                //console.log("did i find it? :" + upstream.statusApiUrl); // uncomment to test
-
                 res.setHeader('Content-Type', 'text/event-stream');
+                /* MORE RELIABLE AsyncPolling with this.stop to prevent errors*/
                 AsyncPolling(function (end) {
-                    statusApiService.fetchUpstream(upstream.statusApiUrl, (data,err) => {
+                    console.log("fetchupstream :" + data);
+                    statusApiService.fetchUpstream(data[0].endPoint[0].statusApiUrl, (data,err) => {
+                        console.log(`data: ${data}\n\n`);
                         if (!err) {
                             res.write(`data: ${data}\n\n`);
                             res.status(200)
@@ -57,6 +52,34 @@ export default(app, sse) => {
         });
 
   });
+
+    // app.get('/upstreamview/:id', (req, res) => {
+
+    //     res.setHeader('Content-Type', 'text/event-stream');
+
+    //      /* MORE RELIABLE AsyncPolling with this.stop to prevent errors*/
+    //     AsyncPolling(function (end) {
+    //         statusApiService.fetchUpstream('https://demo.nginx.com/status/upstreams/trac-backend', (data,err) => {
+    //             console.log(`data: ${data}\n\n`);
+    //             if (!err) {
+    //                 res.write(`data: ${data}\n\n`);
+    //                 res.status(200)
+    //                 res.end();
+
+    //               }
+    //             else{
+    //                 console.log("error");
+    //                 res.write(`data: ${err}\n\n`);
+    //                 res.status(200)
+    //                 res.end();
+    //             }
+    //         });
+    //         // Then notify the polling when your job is done:
+    //         this.stop();
+    //         end();
+    //         // This will schedule the next call here
+    //     }, 3000).run();
+    // });
 
 
 /*
@@ -122,6 +145,7 @@ export default(app, sse) => {
         });
     });
 
+    
 
     /* Update User profiles by id (email) */
     app.put('/api/user/:id', (req, res) => {
@@ -179,7 +203,7 @@ export default(app, sse) => {
                     statusApiUrl: req.body.statusApiUrl,
                     description: req.body.description,
                     upStreamConfUrl: ""
-                }, (data, err) => {
+                }, (data, err) => { 
             if (!err) {
                 console.log("GOOD, response is: ",data);
                 res.status(200)

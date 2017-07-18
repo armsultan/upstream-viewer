@@ -10,6 +10,7 @@ import Register from './Register';
 import Login from './Login';
 import UpstreamView from './UpstreamView';
 import MyUpstreams from './MyUpstreams';
+import Home from './Home';
 
 // Redux requires to give a correct mapping of what State should ultimately look
 // like. State is how React and Redux work. What the method below is doing is
@@ -82,7 +83,9 @@ showNav(){
 
     render() {
         return (
+
             <BrowserRouter>
+
                     <div >
 
                         <nav>
@@ -91,8 +94,6 @@ showNav(){
                             {this.showNav()}
                             </div>
                         </nav>
-
-
                         <Route
                             exact
                             path="/login"

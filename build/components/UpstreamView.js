@@ -29,6 +29,9 @@ export default class UpstreamView extends React.Component {
         // console.log(this.props.match.params.id); // uncomment to test
         this.es = new EventSource("/api/user/" + this.props.user.email + "/upstreamview/" + this.props.match.params.id);
 
+        //console.log("GETTING URL: /api/user/" + this.props.user.email + "/upstreamview/" + this.props.match.params.id);
+        
+
         // Set State - pie chart data
         this.es.onmessage = function (event) {
             this.setState({status: JSON.parse(event.data)});
