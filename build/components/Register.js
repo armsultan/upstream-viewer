@@ -32,18 +32,16 @@ export default class Registration extends React.Component {
 
             let email = this.refs.email.value;
             let password = this.refs.password.value;
-            
-
-            console.log("password OK with: ", email, " ", password);
+            // console.log("password OK with: ", email, " ", password); // uncomment to test
 
 
             axios.get('/api/user/' + email)
                 .then(res => {
-                    console.log("test:", res.data)
+                   //  console.log("test:", res.data) // uncomment to test
                     let doesExist = res.data;
                     if (doesExist.length === 0){
                         this.setState({registrationMessage: "New registration"});
-                        console.log("New registration");
+                        //console.log("New registration"); // uncomment to test
 
                         //Create new User
                         axios
@@ -52,7 +50,7 @@ export default class Registration extends React.Component {
                             password: password
                         })
                             .then(res => {
-                                console.log('We have registered a new user ', res.data.email);
+                                //console.log('We have registered a new user ', res.data.email); // uncomment to test
 
                                 //redux setstate
                                 this.props.userLogin(res.data);
@@ -85,11 +83,11 @@ export default class Registration extends React.Component {
         else {
             if(this.validEmail() === false){
                 this.setState({registrationMessage: "Invalid email address!"});
-                console.log("Invalid email address!");
+                //console.log("Invalid email address!"); // uncomment to test
             }
             else{
                 this.setState({registrationMessage: "Password does not match!"});
-                console.log("Password does not match!");
+                //console.log("Password does not match!"); // uncomment to test
             }
 
         }

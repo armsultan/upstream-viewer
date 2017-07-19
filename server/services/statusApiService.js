@@ -20,7 +20,7 @@ for (let i=0; i< colorsList.length; i++) {
         let color = randomColor();
         colorsList[i] = randomColor();
 }
-console.log("Random colors generated: ", colorsList);
+console.log("Generating Colors: " + colorsList + "... Colors Generated");
 
 
 let createEndpoint = (body, callback) => {
@@ -62,7 +62,7 @@ export let checkStatusApi = (body, callback) => {
                                  console.log("User's endpoints: ", data.endPoint);
                              }
                              else{
-                                console.log(err);
+                                console.log("Error: ", err);
                              }
                              });
 
@@ -88,7 +88,7 @@ export let checkStatusApi = (body, callback) => {
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log("Error: ", error);
             console.log("API Check Status: Failed");
                const rFail = {
                 "found": false,
@@ -130,8 +130,8 @@ export let fetchUpstream = (url, callback) => {
             let numOfNodes = Object
                 .keys(response.data.peers)
                 .length;
-            //console.log("Number of nodes: ", numOfNodes); //uncheck this line to test
-            //console.log("Data to process: ", response.data.peers); //uncheck this line to test
+            //console.log("Number of nodes: ", numOfNodes); // uncomment to test
+            //console.log("Data to process: ", response.data.peers); // uncomment to test
             callback(requestsPiechart(response.data.peers));
         })
         .catch(function (error) {
@@ -150,7 +150,7 @@ let requestsPiechart = (data) => {
     let requests =[];
     data.forEach((value,index) => {
         labels.push(value.name)
-        backgroundColor.push(colorsList[index]); // get a color from the color array
+        backgroundColor.push(colorsList[index]); // get a color from the color array by index
         requests.push(value.requests)
     });
 
@@ -159,7 +159,7 @@ let requestsPiechart = (data) => {
     "data": {
       "labels": labels,
       "datasets": [{
-        "label": "Connections per sec",
+        "label": "Total requests",
         "backgroundColor": backgroundColor,
         "data": requests
       }]
@@ -167,7 +167,7 @@ let requestsPiechart = (data) => {
     "options": {
       "title": {
         "display": true,
-        "text": "Connections per sec"
+        "text": "Total requests"
       }
     }
 };

@@ -29,8 +29,7 @@ export default class UpstreamView extends React.Component {
         // console.log(this.props.match.params.id); // uncomment to test
         this.es = new EventSource("/api/user/" + this.props.user.email + "/upstreamview/" + this.props.match.params.id);
 
-        //console.log("GETTING URL: /api/user/" + this.props.user.email + "/upstreamview/" + this.props.match.params.id);
-        
+        //console.log("GETTING URL: /api/user/" + this.props.user.email + "/upstreamview/" + this.props.match.params.id); //uncomment to test
 
         // Set State - pie chart data
         this.es.onmessage = function (event) {
@@ -62,9 +61,10 @@ export default class UpstreamView extends React.Component {
         return (
            <div className="row">
             <div className="col s12">
-                    <h4><i className="small material-icons">insert_chart</i>{this.state.upstreamName}</h4>
-                    <p>{this.state.upstreamDescription}</p>
-                    <p> {this.state.statusApiUrl}</p>
+                    <h4><i className="material-icons">insert_chart</i>{this.state.upstreamName}</h4>
+                    <p><i>{this.state.upstreamDescription}</i><br/>
+                     <small>Data Source: <a href={this.state.statusApiUrl} target="_blank">{this.state.statusApiUrl}</a></small>
+                    </p>
                 </div>
                 {this.renderPieChartData()}
             </div>

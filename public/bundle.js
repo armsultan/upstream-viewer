@@ -12746,7 +12746,7 @@ Object.defineProperty(exports, "__esModule", {
 
 // User Login
 var userLogin = exports.userLogin = function userLogin(user) {
-    console.log('dispatch userLogin');
+    console.log('Dispatch userLogin');
     return {
         type: 'USER_LOGIN',
         user: user
@@ -12754,7 +12754,7 @@ var userLogin = exports.userLogin = function userLogin(user) {
 };
 
 var userLogout = exports.userLogout = function userLogout() {
-    console.log('dispatch userLogout');
+    console.log('Dispatch userLogout');
     return {
         type: 'USER_LOGOUT'
     };
@@ -12762,7 +12762,7 @@ var userLogout = exports.userLogout = function userLogout() {
 
 // update endPoint list (add)
 var updateEndpoints = exports.updateEndpoints = function updateEndpoints(user) {
-    console.log('dispatch ADD_ENDPOINT');
+    console.log('Dispatch ADD_ENDPOINT');
     return {
         type: 'ADD_ENDPOINT',
         user: user
@@ -12771,7 +12771,7 @@ var updateEndpoints = exports.updateEndpoints = function updateEndpoints(user) {
 
 // endPoint list
 var updateEndpointsRemove = exports.updateEndpointsRemove = function updateEndpointsRemove(endpointIndex) {
-    console.log('dispatch REMOVE_ENDPOINT');
+    console.log('Dispatch REMOVE_ENDPOINT');
     return {
         type: 'REMOVE_ENDPOINT',
         endpointIndex: endpointIndex
@@ -29890,8 +29890,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import BasicRouting from './BasicRouting';
-
 
 // Redux requires to give a correct mapping of what State should ultimately look
 // like. State is how React and Redux work. What the method below is doing is
@@ -29975,6 +29973,7 @@ var App = function (_React$Component) {
                     )
                 );
             } else {
+
                 return _react2.default.createElement(
                     'ul',
                     { id: 'nav-mobile', className: 'right hide-on-med-and-down' },
@@ -30988,9 +30987,9 @@ var Login = function (_React$Component) {
                 //check the user exists! i.e not an empty '[]' response and email value return equals the one inputed
                 if (res.data !== 0 && res.data[0].email === _this2.refs.email.value && res.data[0].password === _this2.refs.password.value) {
 
-                    console.log('Login Success');
+                    //console.log('Login Success'); //uncomment to test
                     _this2.setState({ loginMessage: "Welcome back!" });
-                    console.log(res.data[0]);
+                    //console.log(res.data[0]); //uncomment to test
 
                     //redux setstate
                     _this2.props.userLogin(res.data[0]);
@@ -31002,12 +31001,12 @@ var Login = function (_React$Component) {
                     // Redirect page
                     _this2.props.history.push("/myupstreams");
                 } else {
-                    console.log('Login Failed');
+                    //console.log('Login Failed'); //uncomment to test
                     _this2.setState({ loginMessage: "Error: Incorrect password" });
                     _this2.refs.password.value = "";
                 }
             }).catch(function (error) {
-                console.log(error);
+                console.log(error); // uncomment to test
                 _this2.setState({ loginMessage: "Error: User does not exist, please register as a new user" });
                 //unset values
                 _this2.refs.password.value = "";
@@ -31178,12 +31177,11 @@ var Registration = function (_React$Component) {
             var _this2 = this;
 
             _axios2.default.get('/api/user/' + this.props.user.email).then(function (res) {
-
-                console.log("user data: ", res.data[0]);
+                // console.log("user data: ", res.data[0]); // uncomment to test
                 //redux setstate
                 _this2.props.updateEndpoints(res.data[0]);
             }).catch(function (error) {
-                console.log(error);
+                console.log(error); // uncomment to test
             });
         }
     }, {
@@ -31209,7 +31207,7 @@ var Registration = function (_React$Component) {
 
                 //Update react state
                 _this3.setState({ upstreamListMessage: "Upstream " + name + " removed" });
-                console.log("all good!");
+                // console.log("all good!"); // uncomment to test
             }).catch(function (error) {
                 // Update react state
                 _this3.setState({ upstreamListMessage: "Unable to remove upstream " + name });
@@ -31225,10 +31223,10 @@ var Registration = function (_React$Component) {
             this.setState({ upstreamListMessage: "" });
 
             if (this.refs.name.value.trim() === "") {
-                console.log('Add a name');
+                //console.log('Add a name'); // uncomment to test
                 this.setState({ registrationMessage: "Add a name" });
             } else if (_validUrl2.default.isUri(this.refs.url.value)) {
-                console.log('Looks like an URI');
+                //console.log('Looks like an URI'); // uncomment to test
                 this.setState({ registrationMessage: "Looks like an URI" });
 
                 _axios2.default.post('/api/user/' + this.props.user.email + '/endpoint/add', {
@@ -31237,13 +31235,12 @@ var Registration = function (_React$Component) {
                     description: this.refs.description.value
 
                 }).then(function (res) {
-                    console.log(res.data);
+                    //console.log(res.data); // uncomment to test
                     var doesExist = res.data;
                     if (doesExist.length !== 0 && res.data.found !== false) {
-                        console.log("THIS IS IT: ", res.data);
                         _this4.setState({ registrationMessage: "Status API for Upstream found, with shared memory zone " + res.data.zone });
 
-                        console.log("Status API for Upstream found, with shared memory zone " + res.data.zone);
+                        //console.log("Status API for Upstream found, with shared memory zone " + res.data.zone); // uncomment to test
 
                         //Update redux state
                         _this4.updateEndpointList();
@@ -31260,7 +31257,7 @@ var Registration = function (_React$Component) {
                     _this4.setState({ registrationMessage: "Unable to connect to the status API: " + res.data.comment });
                 });
             } else {
-                console.log('Not a URI');
+                //console.log('Not a URI'); // uncomment to test
                 this.setState({ registrationMessage: "Not a URI" });
             }
         }
@@ -31455,6 +31452,7 @@ var Registration = function (_React$Component) {
                                 _react2.default.createElement(
                                     'small',
                                     null,
+                                    'Data Source: ',
                                     _react2.default.createElement(
                                         'a',
                                         { href: endPoint.statusApiUrl, target: '_blank' },
@@ -31551,22 +31549,22 @@ var Registration = function (_React$Component) {
 
                 var email = this.refs.email.value;
                 var password = this.refs.password.value;
+                // console.log("password OK with: ", email, " ", password); // uncomment to test
 
-                console.log("password OK with: ", email, " ", password);
 
                 _axios2.default.get('/api/user/' + email).then(function (res) {
-                    console.log("test:", res.data);
+                    //  console.log("test:", res.data) // uncomment to test
                     var doesExist = res.data;
                     if (doesExist.length === 0) {
                         _this2.setState({ registrationMessage: "New registration" });
-                        console.log("New registration");
+                        //console.log("New registration"); // uncomment to test
 
                         //Create new User
                         _axios2.default.post('/api/user/register', {
                             email: email,
                             password: password
                         }).then(function (res) {
-                            console.log('We have registered a new user ', res.data.email);
+                            //console.log('We have registered a new user ', res.data.email); // uncomment to test
 
                             //redux setstate
                             _this2.props.userLogin(res.data);
@@ -31593,10 +31591,10 @@ var Registration = function (_React$Component) {
             } else {
                 if (this.validEmail() === false) {
                     this.setState({ registrationMessage: "Invalid email address!" });
-                    console.log("Invalid email address!");
+                    //console.log("Invalid email address!"); // uncomment to test
                 } else {
                     this.setState({ registrationMessage: "Password does not match!" });
-                    console.log("Password does not match!");
+                    //console.log("Password does not match!"); // uncomment to test
                 }
             }
         }
@@ -31777,8 +31775,7 @@ var UpstreamView = function (_React$Component) {
             // console.log(this.props.match.params.id); // uncomment to test
             this.es = new EventSource("/api/user/" + this.props.user.email + "/upstreamview/" + this.props.match.params.id);
 
-            //console.log("GETTING URL: /api/user/" + this.props.user.email + "/upstreamview/" + this.props.match.params.id);
-
+            //console.log("GETTING URL: /api/user/" + this.props.user.email + "/upstreamview/" + this.props.match.params.id); //uncomment to test
 
             // Set State - pie chart data
             this.es.onmessage = function (event) {
@@ -31819,7 +31816,7 @@ var UpstreamView = function (_React$Component) {
                         null,
                         _react2.default.createElement(
                             'i',
-                            { className: 'small material-icons' },
+                            { className: 'material-icons' },
                             'insert_chart'
                         ),
                         this.state.upstreamName
@@ -31827,13 +31824,22 @@ var UpstreamView = function (_React$Component) {
                     _react2.default.createElement(
                         'p',
                         null,
-                        this.state.upstreamDescription
-                    ),
-                    _react2.default.createElement(
-                        'p',
-                        null,
-                        ' ',
-                        this.state.statusApiUrl
+                        _react2.default.createElement(
+                            'i',
+                            null,
+                            this.state.upstreamDescription
+                        ),
+                        _react2.default.createElement('br', null),
+                        _react2.default.createElement(
+                            'small',
+                            null,
+                            'Data Source: ',
+                            _react2.default.createElement(
+                                'a',
+                                { href: this.state.statusApiUrl, target: '_blank' },
+                                this.state.statusApiUrl
+                            )
+                        )
                     )
                 ),
                 this.renderPieChartData()

@@ -30,13 +30,12 @@ export default class Registration extends React.Component {
         axios
             .get('/api/user/' + this.props.user.email)
             .then(res => {
-
-                console.log("user data: ", res.data[0]);
+                // console.log("user data: ", res.data[0]); // uncomment to test
                 //redux setstate
                 this.props.updateEndpoints(res.data[0]);
             })
             .catch(error => {
-                console.log(error);
+                console.log(error); // uncomment to test
             })
 
     }
@@ -63,7 +62,7 @@ export default class Registration extends React.Component {
 
                     //Update react state
                     this.setState({upstreamListMessage: "Upstream " +  name + " removed"});
-                    console.log("all good!");
+                    // console.log("all good!"); // uncomment to test
 
                 })
                 .catch(error => {
@@ -82,12 +81,12 @@ export default class Registration extends React.Component {
 
 
         if (this.refs.name.value.trim() === ""){
-            console.log('Add a name');
+            //console.log('Add a name'); // uncomment to test
             this.setState({registrationMessage: "Add a name"})
         }
 
         else if (validUrl.isUri(this.refs.url.value)){
-            console.log('Looks like an URI');
+            //console.log('Looks like an URI'); // uncomment to test
             this.setState({registrationMessage: "Looks like an URI"})
 
 
@@ -99,13 +98,12 @@ export default class Registration extends React.Component {
 
                 })
                 .then(res => {
-                    console.log(res.data);
+                    //console.log(res.data); // uncomment to test
                     let doesExist = res.data;
                     if (doesExist.length !== 0 && res.data.found !== false){
-                        console.log("THIS IS IT: ",res.data)
                         this.setState({registrationMessage: "Status API for Upstream found, with shared memory zone " + res.data.zone});
 
-                        console.log("Status API for Upstream found, with shared memory zone " + res.data.zone);
+                        //console.log("Status API for Upstream found, with shared memory zone " + res.data.zone); // uncomment to test
 
                         //Update redux state
                         this.updateEndpointList();
@@ -128,7 +126,7 @@ export default class Registration extends React.Component {
 
 
         } else {
-            console.log('Not a URI');
+            //console.log('Not a URI'); // uncomment to test
             this.setState({registrationMessage: "Not a URI"})
 
         }
@@ -178,13 +176,12 @@ render() {
                         <label className="active">Description</label>
                     </div>
                 </div>
-                
+
                 <div className="row">
                     <div className="col s12">
                          <div>{this.state.registrationMessage}</div>
                     </div>
                 </div>
-                
 
                 <div className="row">
                     <div className="col s12">
@@ -200,7 +197,6 @@ render() {
                 <li className="collection-header">
                        {this.state.upstreamListMessage}
                 </li>
-   
                             {this.props.user.endPoints.slice(0).reverse().map((endPoint, key) => {
                                 let reverseKey = this.props.user.endPoints.length - key - 1;
                                     return (
@@ -208,7 +204,7 @@ render() {
                                          <Link to={'/upstreamview/' + endPoint._id} alt={endPoint.name}><i className="material-icons circle green">insert_chart</i></Link>           
                                             <span className="title"><Link to={'/upstreamview/' + endPoint._id} alt={endPoint.name}>{endPoint.name}</Link></span>
                                             <p>{endPoint.description}<br/>
-                                                <small><a href={endPoint.statusApiUrl} target="_blank">{endPoint.statusApiUrl}</a></small>
+                                                <small>Data Source: <a href={endPoint.statusApiUrl} target="_blank">{endPoint.statusApiUrl}</a></small>
                                             </p>
                                              <button className="secondary-content btn waves-effect waves-light" type="button" value={reverseKey} onClick={this.handleRemoveClick}>Remove</button>
                                         </li>

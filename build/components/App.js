@@ -3,9 +3,7 @@ import {render} from 'react-dom';
 import {BrowserRouter, Route, Switch, Link, withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-
 import * as actionCreators from '../actions/actionCreator';
-// import BasicRouting from './BasicRouting';
 import Register from './Register';
 import Login from './Login';
 import UpstreamView from './UpstreamView';
@@ -69,7 +67,8 @@ showNav(){
             {/*<div><h6>Signed in: {this.props.user.email}</h6><span><Link to="/myupstreams">My Upstreams</Link></span> | <span><Link to="/" onClick={this.signOut}>Signout</Link></span></div>*/}
         </ul>);
     }
-    else{       
+    else{
+
          return (
              <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li>Signed out:</li>

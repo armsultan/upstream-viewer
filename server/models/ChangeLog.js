@@ -1,14 +1,14 @@
 /**
  * Mongoose Models and Schema Declaration File
  *
- * ChangeLog
+ * ChangeLog - not yet implemented
  */
 'use strict';
 import mongoose from 'mongoose';
 
 let changeLogSchema = mongoose.Schema({
     entry: {type: String, required: true},          /*Log entry e.g. 'Drained node1, removed Node2'*/
-    endPoint: {type: String},                        /*A simple String with EndPoint ID (where the change was made to)*/
+    endPoint: {type: String},                       /*A simple String with EndPoint ID (where the change was made to)*/
     createdDate: {type: Date, default: Date.now}    /*Timestamp*/
 });
 

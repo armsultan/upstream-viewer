@@ -13,7 +13,6 @@ let endPoint = mongoose.Schema({
     upStreamConfUrl: {type: String, required: false},     /*URL to the NGINX Upstream conf*/
     createdDate: {type: Date, default: Date.now}            /*Timestamp*/
 });
- 
 
 let userSchema = mongoose.Schema({
     email: { type: String, required: true, index: { unique: true }},
@@ -21,7 +20,6 @@ let userSchema = mongoose.Schema({
     endPoint: [endPoint], /*A simple String with EndPoint IDs*/
     createdDate: {type: Date, default: Date.now}
 });
-
 
 export let UserSchema = userSchema;
 export let User = mongoose.model('User', userSchema);

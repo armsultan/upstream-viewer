@@ -29,9 +29,9 @@ export default class Login extends React.Component {
                 //check the user exists! i.e not an empty '[]' response and email value return equals the one inputed
                 if (res.data !== 0 && res.data[0].email === this.refs.email.value && res.data[0].password === this.refs.password.value){
 
-                console.log('Login Success');
+                //console.log('Login Success'); //uncomment to test
                 this.setState({loginMessage: "Welcome back!"});
-                console.log(res.data[0]);
+                //console.log(res.data[0]); //uncomment to test
 
                 //redux setstate
                 this.props.userLogin(res.data[0]);
@@ -45,7 +45,7 @@ export default class Login extends React.Component {
 
                 }
                 else {
-                console.log('Login Failed');
+                //console.log('Login Failed'); //uncomment to test
                 this.setState({loginMessage: "Error: Incorrect password"});
                 this.refs.password.value="";
                 }
@@ -53,7 +53,7 @@ export default class Login extends React.Component {
 
             })
             .catch(error => {
-                console.log(error);
+                console.log(error); // uncomment to test
                 this.setState({loginMessage: "Error: User does not exist, please register as a new user"});
                 //unset values
                 this.refs.password.value="";
@@ -95,10 +95,11 @@ export default class Login extends React.Component {
             <button className="btn waves-effect waves-light" type="button" onClick={this.handleClick}>Login</button>
         </div>
     </div>
-                        <Route
-                            exact
-                            path="/register"
-                            render={(routeProps) => <Register {...this.props} {...routeProps}/>}/>
+    
+    <Route
+          exact
+          path="/register"
+          render={(routeProps) => <Register {...this.props} {...routeProps}/>}/>
 
     </form>
         );

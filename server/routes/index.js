@@ -9,12 +9,13 @@ import AsyncPolling from 'async-polling';
 
 export default(app, sse) => {
 
-    // We can create an API by this.
-    app.get('/', (req, res) => {
+// Root page '/' , render index.hbs 
+app.get('/', (req, res) => {
         res.render('index');
     });
 
 
+// iInitiates Server Sent Events
   app.get('/api/user/:id/upstreamview/:eid', (req, res) => {
     userService.readUser({
             email: req.params.id,
@@ -27,7 +28,7 @@ export default(app, sse) => {
                     return e._id.toString() === req.params.eid;
                 });
 
-                //console.log("did i find it? :" + upstream.statusApiUrl); // uncomment to test
+                //console.log("Upstream URL found :" + upstream.statusApiUrl); // uncomment to test
 
                 res.setHeader('Content-Type', 'text/event-stream');
                 AsyncPolling(function (end) {
@@ -39,7 +40,7 @@ export default(app, sse) => {
 
                         }
                         else{
-                            console.log("error");
+                            console.log("error", err);
                             res.write(`data: ${err}\n\n`);
                             res.status(200)
                             res.end();
@@ -59,15 +60,18 @@ export default(app, sse) => {
   });
 
 
+
+
+
 /*
-* C R U D : All Functions work with one or many depending on the query (u) passed in
+* C R U D - USER
 */
 
-    /* Create / edit User profiles */
+    /* CREATE User profiles */
     app.post('/api/user/', (req, res) => {
         userService.readUser(req.body, (err, data) => {
             if (!err) {
-                console.log(data);
+                console.log("OK: ", data);
                 res.status(201)
                 res.json(data);
             } else {
@@ -77,41 +81,11 @@ export default(app, sse) => {
         });
     });
 
-    /* Get User profiles (find all when req = {})*/
-    app.get('/api/user/', (req, res) => {
-        userService.readUser({}, (err, data) => {
-            if (!err) {
-                console.log(data);
-                res.status(200)
-                res.json(data);
-            } else {
-                res.status(400)
-                res.json(err);
-            }
-        });
-    });
 
-    /* Get User profiles by id (email) */
-    app.get('/api/user/:id', (req, res) => {
-        userService.readUser({
-            email: req.params.id
-        }, (err, data) => {
-            if (!err) {
-                console.log(data);
-                res.status(200)
-                res.json(data);
-            } else {
-                res.status(400)
-                res.json(err);
-            }
-        });
-    });
-
-    /* Register a new User profiles */
+    /* Create, Register a new User profiles */
     app.post('/api/user/register', (req, res) => {
-        console.log(req.body);
         userService.createUser(req.body, (err, data) => {
-            console.log(data);
+                console.log("OK: ", data);
             if (!err) {
                 res.status(200)
                 res.json(data);
@@ -122,14 +96,45 @@ export default(app, sse) => {
         });
     });
 
+    /* READ, Get User profiles (FIND ALL when req = {})*/
+    app.get('/api/user/', (req, res) => {
+        userService.readUser({}, (err, data) => {
+            if (!err) {
+                console.log("OK: ", data);
+                res.status(200)
+                res.json(data);
+            } else {
+                res.status(400)
+                res.json(err);
+            }
+        });
+    });
 
-    /* Update User profiles by id (email) */
+    /* READ, Get User profiles by id (email) */
+    app.get('/api/user/:id', (req, res) => {
+        userService.readUser({
+            email: req.params.id
+        }, (err, data) => {
+            if (!err) {
+                console.log("OK: ", data);
+                res.status(200)
+                res.json(data);
+            } else {
+                res.status(400)
+                res.json(err);
+            }
+        });
+    });
+
+
+
+    /* UPDATE User profiles by id (email) */
     app.put('/api/user/:id', (req, res) => {
         userService.updateUser({
             email: req.params.id
         }, (err, data) => {
             if (!err) {
-                console.log(data);
+                console.log("OK: ", data);
                 res.status(200)
                 res.json(data);
             } else {
@@ -139,13 +144,13 @@ export default(app, sse) => {
         });
     });
 
-    /* Delete User profiles by id (email) */
+    /* DELETE User profiles by id (email) */
     app.delete('/api/user/:id', (req, res) => {
         userService.removeUser({
             email: req.params.id
         }, (err, data) => {
             if (!err) {
-                console.log(data);
+                console.log("OK: ", data);
                 res.status(200)
                 res.json(data);
             } else {
@@ -155,22 +160,24 @@ export default(app, sse) => {
         });
     });
 
-    /* Add upstream - Check to see remote NGINX status API exists first then add*/
+// Endpoint (Upstream)
+
+    /* DELETE, Add upstream - Check to see remote NGINX status API exists first then add*/
     app.put('/api/user/:id/endpoint/delete', (req, res) => {
         userService.deleteEndpoint(req.params.id,req.body._id, (err, data) => { //this doesnt work when data is set first i.e.(data,err)
             if (!err) {
-                console.log("GOOD, response is: ",data);
+                console.log("OK: ", data);
                 res.status(200)
                 res.json(data);
             } else {
-                console.log("BAD, response is: ",err);
+                console.log("error: ", err);
                 res.status(400)
                 res.json(err);
             }
         });
     });
 
-    /* Add upstream - Check to see remote NGINX status API exists first then add*/
+    /* CREATE, Add upstream - Check to see remote NGINX status API exists first then add*/
     app.post('/api/user/:id/endpoint/add', (req, res) => {
         statusApiService.checkStatusApi(
             {
@@ -181,11 +188,11 @@ export default(app, sse) => {
                     upStreamConfUrl: ""
                 }, (data, err) => {
             if (!err) {
-                console.log("GOOD, response is: ",data);
+                console.log("OK: ", data);
                 res.status(200)
                 res.json(data);
             } else {
-                console.log("BAD, response is: ",err);
+                console.log("error ", err);
                 res.status(400)
                 res.json(err);
             }

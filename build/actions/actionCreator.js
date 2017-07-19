@@ -4,7 +4,7 @@
 
 // User Login
 export let userLogin = (user) => {
-    console.log('dispatch userLogin');
+    console.log('Dispatch userLogin');
     return {
         type: 'USER_LOGIN',
         user
@@ -12,7 +12,7 @@ export let userLogin = (user) => {
 }
 
 export let userLogout = () => {
-    console.log('dispatch userLogout');
+    console.log('Dispatch userLogout');
     return {
         type: 'USER_LOGOUT'
     };
@@ -20,7 +20,7 @@ export let userLogout = () => {
 
 // update endPoint list (add)
 export let updateEndpoints = (user) => {
-    console.log('dispatch ADD_ENDPOINT');
+    console.log('Dispatch ADD_ENDPOINT');
     return {
         type: 'ADD_ENDPOINT',
         user
@@ -29,7 +29,7 @@ export let updateEndpoints = (user) => {
 
 // endPoint list
 export let updateEndpointsRemove = (endpointIndex) => {
-    console.log('dispatch REMOVE_ENDPOINT');
+    console.log('Dispatch REMOVE_ENDPOINT');
     return {
         type: 'REMOVE_ENDPOINT',
         endpointIndex
