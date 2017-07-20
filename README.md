@@ -32,3 +32,7 @@ note: if you uncomment the line `import env from './env';` in `server/server.js`
 ## Run Unit Tests:
 
 	npm test
+
+## End to End tests here:
+
+	[upstreamviewer-e2e-test](https://github.com/armsultan/upstreamviewer-e2e-test)
